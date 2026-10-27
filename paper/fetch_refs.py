@@ -72,6 +72,8 @@ SEEDS = [
     ("monotone_adversary", 'ti:"top-k ranking with a monotone adversary"'),
     ("bt_general_graphs_2026", 'ti:"Bradley-Terry model under general comparison graphs"'),
     ("graph_monotone_2026", 'ti:"Graph-monotone entrywise guarantees"'),
+    ("chen2019topk_random_graph", 'ti:"Spectral method and regularized MLE"'),
+    ("osting2012design", 'ti:"Optimal data collection for informative rankings"'),
 ]
 
 # Titles containing these substrings are off-topic for this paper (screened out).
