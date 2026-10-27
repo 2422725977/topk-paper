@@ -54,3 +54,18 @@
 | dumbbell (2×10 团+桥) | 91 | 0.169048 | 瓶颈小 ✓ |
 
 - BT 采样器 sanity：θ=[2,0] 时 10 万次比较经验胜率 0.8826 vs sigmoid(2)=0.8808 ✓。
+## W0.4 algo（algorithms.py 三算法 + test_algorithms.py）
+
+- 实现：`uniform_majority`（固定预算均匀采边+胜率投票，完全图等均衡图上有效）、
+  `successive_elimination`（逐轮淘汰：每个活跃物品与均匀随机 G-邻居比较，预算逐轮加倍）、
+  `graph_walk_elimination`（本文算法：每个活跃物品从自身出发做长度 c 的图上随机游走，途经边即比较）。
+- 共享统计核：累计数据上的正则化 BT MLE（阻尼 Newton，gauge 用零均值钉住）+ 观测 Fisher 伪逆置信半径
+  （曲率下限 1e-3 防可分离数据塌缩）+ 下界/上界逐轮淘汰。三个算法仅采样机制不同。
+- 调试中修复的三个真实 bug（记录以供 Wave 1 引以为戒）：
+  1. `_aggregate` 把同一无向边两个采样方向的"首端点胜场"混入同桶 → 标签翻转污染 MLE（改为按 (lo,hi) 规范方向计数）；
+  2. BT 似然沿全 1 规范方向奇异，置信半径必须用 Moore-Penrose 伪逆（普通 +μI 会把 μ⁻¹ 漏进每个对角元，半径恒 ~1800）；
+  3. 可分离（饱和）边上 MLE 发散 + 曲率→0 → 半径爆炸永不淘汰（曲率下限 + Newton 步长截断）。
+- 验收（n=5、θ=[4,2,0,-2,-4] 即 Δ=2、完全图、k∈{1,2,3}，每配置 100 seeds）+ Δ=1 例（θ=[2,1,0,-1,-2]）：
+  `pytest test_algorithms.py` → **7 passed in 3.50s**（含 cycle/star 稀疏图冒烟测试，均非 capped）。
+- k=2、Δ=2、100 seeds 实测统计：三算法均 100/100 正确；
+  rounds 中位数 8（最大 9）；T 中位数 827（SE 最大 1675，GWE 最大 1627）；uniform_majority 预算 2000。
