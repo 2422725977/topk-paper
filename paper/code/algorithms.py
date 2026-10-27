@@ -38,10 +38,21 @@ from scipy.special import expit, log_expit
 
 from simulate import make_theta  # noqa: F401  (re-exported for convenience)
 
-_MU = 1e-6          # ridge pinning the gauge
+_MU = 1e-6          # ridge pinning the gauge (Newton solver only)
 _MAX_NEWTON = 25
 _STEP_CLIP = 10.0
-_CURV_FLOOR = 1e-3  # curvature floor for confidence radii
+# Declared algorithm assumption: |theta_i - theta_j| <= D_MAX (bounded dynamic
+# range, the standard regime in the top-k literature).  Confidence radii use the
+# plug-in curvature sigma'(d_hat) with d_hat clipped to [-D_MAX, D_MAX].
+_D_MAX = 2.0
+_CURV_FLOOR = 1e-9  # numerical safety only
+# Bernstein-type linear term for the sub-exponential tails of the logistic MLE:
+# radius_i = sqrt(2 x p_i) + BERNSTEIN_LIN * x * p_i with x the union-bound
+# logarithm and p_i = (H^+)_ii.  The linear term only matters where p_i is large
+# (weakly connected / saturated directions), which is exactly where the pure
+# sqrt plug-in radius undercovers.
+_BERNSTEIN_LIN = 2.0
+_MIX_PROB = 0.10      # probability of sampling an opponent from the full graph
 _MAX_ROUNDS = 60
 _C_MAX = 1 << 15
 
@@ -113,35 +124,49 @@ def _mle(pairs: np.ndarray, counts: np.ndarray, wins: np.ndarray, n: int):
             break
     d = u @ theta
     s = expit(d)
-    # CI curvature: floor the per-sample curvature so saturated (separable) edges
-    # cannot drive H -> 0 and explode the radii.  Returned WITHOUT the Newton ridge:
-    # the likelihood is shift-invariant, so H is singular along the gauge direction
-    # and _confidence_radii must use a pseudo-inverse instead.
-    w_ci = counts * np.maximum(s * (1 - s), _CURV_FLOOR)
+    # CI curvature: plug-in sigma'(d_hat) with the dynamic-range clip documented
+    # above; returned WITHOUT the Newton ridge -- the likelihood is shift-invariant,
+    # so H is singular along the gauge direction and _confidence_radii must use a
+    # pseudo-inverse instead.
+    d_clip = np.clip(d, -_D_MAX, _D_MAX)
+    s_clip = expit(d_clip)
+    w_ci = counts * np.maximum(s_clip * (1 - s_clip), _CURV_FLOOR)
     H_ci = u.T @ (u * w_ci[:, None])
     return theta, H_ci
 
 
-def _confidence_radii(H: np.ndarray, n: int, delta: float, round_idx: int) -> np.ndarray:
-    """radius_i = sqrt(b * (H^+)_ii), pseudo-inverse over the gauge's orthogonal
-    complement; b is a union bound over items x rounds."""
-    Hinv_diag = np.linalg.pinv(H).diagonal()
-    b = 2.0 * np.log(4.0 * n * max(round_idx, 1) / delta)
-    return np.sqrt(b * np.maximum(Hinv_diag, 1e-12))
+def _pair_thresholds(P: np.ndarray, active: list[int], x_log: float) -> tuple[np.ndarray, np.ndarray]:
+    """Contrast standard deviations s_ij and decision thresholds t_ij for active pairs.
+
+    s_ij^2 = P_ii + P_jj - 2 P_ij with P = pinv(H) is the gauge-free variance of the
+    contrast theta_i - theta_j; unlike per-item pinv diagonals it keeps shrinking
+    while fresh active-active comparisons arrive, even when edges to eliminated
+    items are stale.
+    """
+    idx = np.array(active, dtype=int)
+    PAA = P[np.ix_(idx, idx)]
+    p = np.diag(PAA).copy()
+    s2 = p[:, None] + p[None, :] - 2.0 * PAA
+    np.fill_diagonal(s2, np.inf)
+    t = np.sqrt(2.0 * x_log * s2) + _BERNSTEIN_LIN * x_log * s2
+    return idx, t
 
 
-def _eliminate(theta_hat: np.ndarray, radii: np.ndarray, active: list[int], k: int) -> list[int]:
-    lb = {i: theta_hat[i] - radii[i] for i in active}
-    ub = {i: theta_hat[i] + radii[i] for i in active}
-    lbs = sorted((lb[i] for i in active), reverse=True)
-    if len(active) <= k or len(lbs) < k:
+def _eliminate(theta_hat: np.ndarray, P: np.ndarray, active: list[int], k: int,
+               x_log: float) -> list[int]:
+    """Eliminate active items dominated by >= k other actives (contrast CIs)."""
+    if len(active) <= k:
         return list(active)
-    kth_lb = lbs[k - 1]
-    survivors = [i for i in active if ub[i] >= kth_lb]
+    idx, t = _pair_thresholds(P, active, x_log)
+    m = theta_hat[idx]
+    margin = m[:, None] - m[None, :]          # margin[i,j] = theta_i - theta_j
+    dominates = (margin > t) & ~np.eye(len(idx), dtype=bool)
+    kill = dominates.sum(axis=0) >= k
+    survivors = idx[~kill]
     if len(survivors) < k:  # safety: never drop below k in one round
-        keep = set(sorted(active, key=lambda i: -ub[i])[:k])
-        survivors = [i for i in active if i in keep]
-    return survivors
+        keep = set(idx[np.argsort(-m)[:k]].tolist())
+        survivors = np.array([i for i in idx if i in keep], dtype=int)
+    return survivors.tolist()
 
 
 def _bt(pairs: np.ndarray, theta: np.ndarray, rng: np.random.Generator) -> np.ndarray:
@@ -208,15 +233,45 @@ def _run_elimination(theta: np.ndarray, G: dict, k: int, delta: float,
     c = 1
     capped = False
     for r in range(1, _MAX_ROUNDS + 1):
+        # Per-round neighbor lists in GLOBAL id space.  Primary opponent pool of an
+        # active vertex = its ACTIVE G-neighbors (successive elimination concentrates
+        # samples on the active set); vertices isolated in G[A] fall back to their
+        # full-G neighbor list.  A small mixing probability samples from the full-G
+        # list for everyone, keeping counts on edges to eliminated items alive (the
+        # contrast CIs route through them) and preventing elimination deadlocks.
+        act_set = set(active)
+        act_arr = np.array(active, dtype=int)
+        lists: list[np.ndarray] = []
+        degs = np.zeros(n, dtype=int)
+        for v in range(n):
+            full = indices[indptr[v]:indptr[v + 1]]
+            if v in act_set:
+                act_nbrs = full[np.isin(full, act_arr)]
+                lists.append(act_nbrs if len(act_nbrs) else full)
+            else:
+                lists.append(full)
+            degs[v] = len(lists[v])
+        r_indptr = np.zeros(n + 1, dtype=int)
+        r_indptr[1:] = np.cumsum(degs)
+        r_indices = np.concatenate(lists) if n else np.array([], dtype=int)
+
+        def _sample(src: np.ndarray) -> np.ndarray:
+            opp = _random_neighbors(r_indptr, r_indices, degs, src, rng)
+            if len(src):
+                mix = rng.random(len(src)) < _MIX_PROB
+                if mix.any():
+                    opp = opp.copy()
+                    opp[mix] = _random_neighbors(indptr, indices, deg, src[mix], rng)
+            return opp
+
         if scheme == "uniform_neighbors":
-            rep = np.repeat(np.array(active, dtype=int), c)
-            opp = _random_neighbors(indptr, indices, deg, rep, rng)
-            pairs = np.column_stack([rep, opp])
+            src = np.repeat(act_arr, c)
+            pairs = np.column_stack([src, _sample(src)])
         elif scheme == "random_walk":
-            walkers = np.array(active, dtype=int)  # one walk per active item
+            walkers = act_arr.copy()  # one walk per active item
             steps = []
             for _ in range(c):
-                nxt = _random_neighbors(indptr, indices, deg, walkers, rng)
+                nxt = _sample(walkers)
                 steps.append(np.column_stack([walkers, nxt]))
                 walkers = nxt
             pairs = np.vstack(steps)
@@ -232,8 +287,9 @@ def _run_elimination(theta: np.ndarray, G: dict, k: int, delta: float,
         counts = np.array([acc[tuple(e)][0] for e in ue])
         wins = np.array([acc[tuple(e)][1] for e in ue])
         theta_hat, H = _mle(ue, counts, wins, n)
-        radii = _confidence_radii(H, n, delta, r)
-        new_active = _eliminate(theta_hat, radii, active, k)
+        P = np.linalg.pinv(H)
+        x_log = np.log(4.0 * n * n * max(r, 1) / delta)
+        new_active = _eliminate(theta_hat, P, active, k, x_log)
         if len(new_active) == k:
             S = sorted(new_active, key=lambda i: -theta_hat[i])
             return S, T, {"rounds": r, "t_history": t_history, "capped": False}
