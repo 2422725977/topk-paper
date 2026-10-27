@@ -1,0 +1,569 @@
+{
+ "fetched_at": "2026-10-28 03:37:47",
+ "tool": "fetch_refs.py (arXiv Atom API + Semantic Scholar Graph API)",
+ "n_papers": 35,
+ "s2_citation_ok": 16,
+ "s2_citation_fail": 19,
+ "failed_queries": [],
+ "direction_counts": {
+  "dueling_bandits": 6,
+  "topk_pairwise": 8,
+  "bt_sample_complexity": 4,
+  "ranking_pairwise": 7,
+  "graph_bandit": 5
+ },
+ "papers": [
+  {
+   "arxiv_id": "1109.3701",
+   "title": "Active Ranking using Pairwise Comparisons",
+   "authors": [
+    "Kevin G. Jamieson",
+    "Robert D. Nowak"
+   ],
+   "year": "2011",
+   "abstract": "This paper examines the problem of ranking a collection of objects using pairwise comparisons (rankings of two objects). In general, the ranking of $n$ objects can be identified by standard sorting methods using $n log_2 n$ pairwise comparisons. We are interested in natural situations in which relationships among the objects may allow for ranking using far fewer pairwise comparisons. Specifically, we assume that the objects can be embedded into a $d$-dimensional Euclidean space and that the rankings reflect their relative distances from a common reference point in $R^d$. We show that under this assumption the number of possible rankings grows like $n^{2d}$ and demonstrate an algorithm that can identify a randomly selected ranking using just slightly more than $d log n$ adaptively selected pairwise comparisons, on average. If instead the comparisons are chosen at random, then almost all pairwise comparisons must be made in order to identify any ranking. In addition, we propose a robust, error-tolerant algorithm that only requires that the pairwise comparisons are probably correct. Experimental studies with synthetic and real datasets support the conclusions of our theoretical analysis.",
+   "citationCount": 285,
+   "directions": [],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "1209.1688",
+   "title": "Rank Centrality: Ranking from Pair-wise Comparisons",
+   "authors": [
+    "Sahand Negahban",
+    "Sewoong Oh",
+    "Devavrat Shah"
+   ],
+   "year": "2012",
+   "abstract": "The question of aggregating pair-wise comparisons to obtain a global ranking over a collection of objects has been of interest for a very long time: be it ranking of online gamers (e.g. MSR's TrueSkill system) and chess players, aggregating social opinions, or deciding which product to sell based on transactions. In most settings, in addition to obtaining a ranking, finding `scores' for each object (e.g. player's rating) is of interest for understanding the intensity of the preferences. In this paper, we propose Rank Centrality, an iterative rank aggregation algorithm for discovering scores for objects (or items) from pair-wise comparisons. The algorithm has a natural random walk interpretation over the graph of objects with an edge present between a pair of objects if they are compared; the score, which we call Rank Centrality, of an object turns out to be its stationary probability under this random walk. To study the efficacy of the algorithm, we consider the popular Bradley-Terry-Luce (BTL) model (equivalent to the Multinomial Logit (MNL) for pair-wise comparisons) in which each object has an associated score which determines the probabilistic outcomes of pair-wise comparisons between objects. In terms of the pair-wise marginal probabilities, which is the main subject of this paper, the MNL model and the BTL model are identical. We bound the finite sample error rates between the scores assumed by the BTL model and those estimated by our algorithm. In particular, the number of samples required to learn the score well with high probability depends on the structure of the comparison graph. When the Laplacian of the comparison graph has a strictly positive spectral gap, e.g. each item is compared to a subset of randomly chosen items, this leads to dependence on the number of samples that is nearly order-optimal.",
+   "citationCount": 276,
+   "directions": [],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "1504.07218",
+   "title": "Spectral MLE: Top-$K$ Rank Aggregation from Pairwise Comparisons",
+   "authors": [
+    "Yuxin Chen",
+    "Changho Suh"
+   ],
+   "year": "2015",
+   "abstract": "This paper explores the preference-based top-$K$ rank aggregation problem. Suppose that a collection of items is repeatedly compared in pairs, and one wishes to recover a consistent ordering that emphasizes the top-$K$ ranked items, based on partially revealed preferences. We focus on the Bradley-Terry-Luce (BTL) model that postulates a set of latent preference scores underlying all items, where the odds of paired comparisons depend only on the relative scores of the items involved. We characterize the minimax limits on identifiability of top-$K$ ranked items, in the presence of random and non-adaptive sampling. Our results highlight a separation measure that quantifies the gap of preference scores between the $K^{\\text{th}}$ and $(K+1)^{\\text{th}}$ ranked items. The minimum sample complexity required for reliable top-$K$ ranking scales inversely with the separation measure irrespective of other preference distribution metrics. To approach this minimax limit, we propose a nearly linear-time ranking scheme, called \\emph{Spectral MLE}, that returns the indices of the top-$K$ items in accordance to a careful score estimate. In a nutshell, Spectral MLE starts with an initial score estimate with minimal squared loss (obtained via a spectral method), and then successively refines each component with the assistance of coordinate-wise MLEs. Encouragingly, Spectral MLE allows perfect top-$K$ item identification under minimal sample complexity. The practical applicability of Spectral MLE is further corroborated by numerical experiments.",
+   "citationCount": 160,
+   "directions": [
+    "topk_pairwise",
+    "bt_sample_complexity"
+   ],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "1801.01253",
+   "title": "Approximate Ranking from Pairwise Comparisons",
+   "authors": [
+    "Reinhard Heckel",
+    "Max Simchowitz",
+    "Kannan Ramchandran",
+    "Martin J. Wainwright"
+   ],
+   "year": "2018",
+   "abstract": "A common problem in machine learning is to rank a set of n items based on pairwise comparisons. Here ranking refers to partitioning the items into sets of pre-specified sizes according to their scores, which includes identification of the top-k items as the most prominent special case. The score of a given item is defined as the probability that it beats a randomly chosen other item. Finding an exact ranking typically requires a prohibitively large number of comparisons, but in practice, approximate rankings are often adequate. Accordingly, we study the problem of finding approximate rankings from pairwise comparisons. We analyze an active ranking algorithm that counts the number of comparisons won, and decides whether to stop or which pair of items to compare next, based on confidence intervals computed from the data collected in previous steps. We show that this algorithm succeeds in recovering approximate rankings using a number of comparisons that is close to optimal up to logarithmic factors. We also present numerical results, showing that in practice, approximation can drastically reduce the number of comparisons required to estimate a ranking.",
+   "citationCount": 49,
+   "directions": [
+    "topk_pairwise",
+    "ranking_pairwise"
+   ],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "2101.08421",
+   "title": "Optimal Full Ranking from Pairwise Comparisons",
+   "authors": [
+    "Pinhan Chen",
+    "Chao Gao",
+    "Anderson Y. Zhang"
+   ],
+   "year": "2021",
+   "abstract": "We consider the problem of ranking $n$ players from partial pairwise comparison data under the Bradley-Terry-Luce model. For the first time in the literature, the minimax rate of this ranking problem is derived with respect to the Kendall's tau distance that measures the difference between two rank vectors by counting the number of inversions. The minimax rate of ranking exhibits a transition between an exponential rate and a polynomial rate depending on the magnitude of the signal-to-noise ratio of the problem. To the best of our knowledge, this phenomenon is unique to full ranking and has not been seen in any other statistical estimation problem. To achieve the minimax rate, we propose a divide-and-conquer ranking algorithm that first divides the $n$ players into groups of similar skills and then computes local MLE within each group. The optimality of the proposed algorithm is established by a careful approximate independence argument between the two steps.",
+   "citationCount": 28,
+   "directions": [
+    "ranking_pairwise"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2005.09841",
+   "title": "Best Arm Identification in Spectral Bandits",
+   "authors": [
+    "Tomáš Kocák",
+    "Aurélien Garivier"
+   ],
+   "year": "2020",
+   "abstract": "We study best-arm identification with fixed confidence in bandit models with graph smoothness constraint. We provide and analyze an efficient gradient ascent algorithm to compute the sample complexity of this problem as a solution of a non-smooth max-min problem (providing in passing a simplified analysis for the unconstrained case). Building on this algorithm, we propose an asymptotically optimal strategy. We furthermore illustrate by numerical experiments both the strategy's efficiency and the impact of the smoothness constraint on the sample complexity. Best Arm Identification (BAI) is an important challenge in many applications ranging from parameter tuning to clinical trials. It is now very well understood in vanilla bandit models, but real-world problems typically involve some dependency between arms that requires more involved models. Assuming a graph structure on the arms is an elegant practical way to encompass this phenomenon, but this had been done so far only for regret minimization. Addressing BAI with graph constraints involves delicate optimization problems for which the present paper offers a solution.",
+   "citationCount": 21,
+   "directions": [
+    "graph_bandit"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2202.01446",
+   "title": "Noisy Sorting Capacity",
+   "authors": [
+    "Ziao Wang",
+    "Nadim Ghaddar",
+    "Banghua Zhu",
+    "Lele Wang"
+   ],
+   "year": "2022",
+   "abstract": "Sorting is the task of ordering $n$ elements using pairwise comparisons. It is well known that $m=Θ(n\\log n)$ comparisons are both necessary and sufficient when the outcomes of the comparisons are observed with no noise. In this paper, we study the sorting problem when each comparison is incorrect with some fixed yet unknown probability $p$. Unlike the common approach in the literature which aims to minimize the number of pairwise comparisons $m$ to achieve a given desired error probability, we consider randomized algorithms with expected number of queries $\\textsf{E}[M]$ and aim at characterizing the maximal sorting rate $\\frac{n\\log n}{\\textsf{E}[M]}$ such that the ordering of the elements can be estimated with a vanishing error probability asymptotically. The maximal rate is referred to as the noisy sorting capacity. In this work, we derive upper and lower bounds on the noisy sorting capacity. The two lower bounds -- one for fixed-length algorithms and one for variable-length algorithms -- are established by combining the insertion sort algorithm with the well-known Burnashev--Zigangirov algorithm for channel coding with feedback. Compared with existing methods, the proposed algorithms are universal in the sense that they do not require the knowledge of $p$, while maintaining a strictly positive sorting rate. Moreover, we derive a general upper bound on the noisy sorting capacity, along with an upper bound on the maximal rate that can be achieved by sorting algorithms that are based on insertion sort.",
+   "citationCount": 19,
+   "directions": [],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "2006.12772",
+   "title": "Combinatorial Pure Exploration of Dueling Bandit",
+   "authors": [
+    "Wei Chen",
+    "Yihan Du",
+    "Longbo Huang",
+    "Haoyu Zhao"
+   ],
+   "year": "2020",
+   "abstract": "In this paper, we study combinatorial pure exploration for dueling bandits (CPE-DB): we have multiple candidates for multiple positions as modeled by a bipartite graph, and in each round we sample a duel of two candidates on one position and observe who wins in the duel, with the goal of finding the best candidate-position matching with high probability after multiple rounds of samples. CPE-DB is an adaptation of the original combinatorial pure exploration for multi-armed bandit (CPE-MAB) problem to the dueling bandit setting. We consider both the Borda winner and the Condorcet winner cases. For Borda winner, we establish a reduction of the problem to the original CPE-MAB setting and design PAC and exact algorithms that achieve both the sample complexity similar to that in the CPE-MAB setting (which is nearly optimal for a subclass of problems) and polynomial running time per round. For Condorcet winner, we first design a fully polynomial time approximation scheme (FPTAS) for the offline problem of finding the Condorcet winner with known winning probabilities, and then use the FPTAS as an oracle to design a novel pure exploration algorithm ${\\sf CAR}$-${\\sf Cond}$ with sample complexity analysis. ${\\sf CAR}$-${\\sf Cond}$ is the first algorithm with polynomial running time per round for identifying the Condorcet winner in CPE-DB.",
+   "citationCount": 18,
+   "directions": [
+    "graph_bandit"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2108.00230",
+   "title": "Pure Exploration and Regret Minimization in Matching Bandits",
+   "authors": [
+    "Flore Sentenac",
+    "Jialin Yi",
+    "Clément Calauzènes",
+    "Vianney Perchet",
+    "Milan Vojnovic"
+   ],
+   "year": "2021",
+   "abstract": "Finding an optimal matching in a weighted graph is a standard combinatorial problem. We consider its semi-bandit version where either a pair or a full matching is sampled sequentially. We prove that it is possible to leverage a rank-1 assumption on the adjacency matrix to reduce the sample complexity and the regret of off-the-shelf algorithms up to reaching a linear dependency in the number of vertices (up to poly log terms).",
+   "citationCount": 6,
+   "directions": [
+    "graph_bandit"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2304.06821",
+   "title": "Ranking from Pairwise Comparisons in General Graphs and Graphs with Locality",
+   "authors": [
+    "Yanxi Chen"
+   ],
+   "year": "2023",
+   "abstract": "This technical report studies the problem of ranking from pairwise comparisons in the classical Bradley-Terry-Luce (BTL) model, with a focus on score estimation. For general graphs, we show that, with sufficiently many samples, maximum likelihood estimation (MLE) achieves an entrywise estimation error matching the Cramér-Rao lower bound, which can be stated in terms of effective resistances; the key to our analysis is a connection between statistical estimation and iterative optimization by preconditioned gradient descent. We are also particularly interested in graphs with locality, where only nearby items can be connected by edges; our analysis identifies conditions under which locality does not hurt, i.e. comparing the scores between a pair of items that are far apart in the graph is nearly as easy as comparing a pair of nearby items. We further explore divide-and-conquer algorithms that can provably achieve similar guarantees even in the regime with the sparsest samples, while enjoying certain computational advantages. Numerical results validate our theory and confirm the efficacy of the proposed algorithms.",
+   "citationCount": 6,
+   "directions": [
+    "ranking_pairwise"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2503.07824",
+   "title": "Pure Exploration with Feedback Graphs",
+   "authors": [
+    "Alessio Russo",
+    "Yichen Song",
+    "Aldo Pacchiano"
+   ],
+   "year": "2025",
+   "abstract": "We study the sample complexity of pure exploration in an online learning problem with a feedback graph. This graph dictates the feedback available to the learner, covering scenarios between full-information, pure bandit feedback, and settings with no feedback on the chosen action. While variants of this problem have been investigated for regret minimization, no prior work has addressed the pure exploration setting, which is the focus of our study. We derive an instance-specific lower bound on the sample complexity of learning the best action with fixed confidence, even when the feedback graph is unknown and stochastic, and present unidentifiability results for Bernoulli rewards. Additionally, our findings reveal how the sample complexity scales with key graph-dependent quantities. Lastly, we introduce TaS-FG (Track and Stop for Feedback Graphs), an asymptotically optimal algorithm, and demonstrate its efficiency across different graph configurations.",
+   "citationCount": 4,
+   "directions": [
+    "graph_bandit"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2605.29395",
+   "title": "Low Rank for Rank: Uncertainty-Aware Task-Specific LLM Ranking under Sparse Pairwise Comparisons",
+   "authors": [
+    "Jiachun Li",
+    "David Simchi-Levi",
+    "Will Wei Sun"
+   ],
+   "year": "2026",
+   "abstract": "Pairwise human-preference platforms such as Chatbot Arena have become central to large language model (LLM) evaluation, yet reliable task-specific ranking remains challenging. Global leaderboards mask task heterogeneity, while ranking each fine-grained task independently is unstable under sparse, imbalanced comparisons. We propose a low-rank framework for task-specific LLM ranking from sparse pairwise comparisons, modeling the task-by-model ability matrix $Θ^\\star \\in \\mathbb{R}^{d_t \\times d_m}$ as low rank so that information is shared across related tasks while task-specific differences are preserved. We first develop a max-norm ($\\ell_\\infty$) accurate estimator for the latent scores, combining a convex initializer with alternating-minimization refinement, and prove task-wise top-$K$ recovery guarantees under sparse sampling. Our main contribution is an uncertainty quantification framework for task-specific ranking. We construct cross-fitted one-step debiased estimators for fixed score contrasts -- such as the task-specific ability gap between two models -- yielding asymptotically valid confidence intervals that attain the semiparametric efficiency bound. We then extend the inference to the high-dimensional ranking regime, where per-task ranks and top-$K$ membership are determined by many dependent score-gap hypotheses. Using Gaussian and multiplier-bootstrap calibration, we obtain simultaneous confidence sets for per-task ranks and valid top-$K$ membership tests across many tasks and models. Experiments on synthetic data and Chatbot Arena show that low-rank sharing improves sample efficiency over independent task-wise Bradley-Terry estimation and produces tighter, better-calibrated ranking certificates, with the largest gains in the sparse regime typical of real LLM benchmarks.",
+   "citationCount": 3,
+   "directions": [
+    "topk_pairwise"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2512.15269",
+   "title": "Model inference for ranking from pairwise comparisons",
+   "authors": [
+    "Daniel Sánchez Catalina",
+    "George T. Cantwell"
+   ],
+   "year": "2025",
+   "abstract": "We consider the problem of ranking objects from noisy pairwise comparisons, for example, ranking tennis players from the outcomes of matches. We follow a standard approach to this problem and assume that each object has an unobserved strength and that the outcome of each comparison depends probabilistically on the strengths of the comparands. However, we do not assume to know a priori how skills affect outcomes. Instead, we present an efficient algorithm for simultaneously inferring both the unobserved strengths and the function that maps strengths to probabilities. Despite this problem being under-constrained, we present experimental evidence that the conclusions of our Bayesian approach are robust to different model specifications. We include several case studies to exemplify the method on real-world data sets.",
+   "citationCount": 1,
+   "directions": [
+    "ranking_pairwise"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "1312.3393",
+   "title": "Relative Upper Confidence Bound for the K-Armed Dueling Bandit Problem",
+   "authors": [
+    "Masrour Zoghi",
+    "Shimon Whiteson",
+    "Remi Munos",
+    "Maarten de Rijke"
+   ],
+   "year": "2013",
+   "abstract": "This paper proposes a new method for the K-armed dueling bandit problem, a variation on the regular K-armed bandit problem that offers only relative feedback about pairs of arms. Our approach extends the Upper Confidence Bound algorithm to the relative setting by using estimates of the pairwise probabilities to select a promising arm and applying Upper Confidence Bound with the winner as a benchmark. We prove a finite-time regret bound of order O(log t). In addition, our empirical results using real data from an information retrieval application show that it greatly outperforms the state of the art.",
+   "citationCount": null,
+   "directions": [],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "1512.08949",
+   "title": "Simple, Robust and Optimal Ranking from Pairwise Comparisons",
+   "authors": [
+    "Nihar B. Shah",
+    "Martin J. Wainwright"
+   ],
+   "year": "2015",
+   "abstract": "We consider data in the form of pairwise comparisons of n items, with the goal of precisely identifying the top k items for some value of k < n, or alternatively, recovering a ranking of all the items. We analyze the Copeland counting algorithm that ranks the items in order of the number of pairwise comparisons won, and show it has three attractive features: (a) its computational efficiency leads to speed-ups of several orders of magnitude in computation time as compared to prior work; (b) it is robust in that theoretical guarantees impose no conditions on the underlying matrix of pairwise-comparison probabilities, in contrast to some prior work that applies only to the BTL parametric model; and (c) it is an optimal method up to constant factors, meaning that it achieves the information-theoretic limits for recovering the top k-subset. We extend our results to obtain sharp guarantees for approximate recovery under the Hamming distortion metric, and more generally, to any arbitrary error requirement that satisfies a simple and natural monotonicity condition.",
+   "citationCount": null,
+   "directions": [
+    "topk_pairwise",
+    "ranking_pairwise"
+   ],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "1505.01462",
+   "title": "Estimation from Pairwise Comparisons: Sharp Minimax Bounds with Topology Dependence",
+   "authors": [
+    "Nihar B. Shah",
+    "Sivaraman Balakrishnan",
+    "Joseph Bradley",
+    "Abhay Parekh",
+    "Kannan Ramchandran",
+    "Martin J. Wainwright"
+   ],
+   "year": "2015",
+   "abstract": "Data in the form of pairwise comparisons arises in many domains, including preference elicitation, sporting competitions, and peer grading among others. We consider parametric ordinal models for such pairwise comparison data involving a latent vector $w^* \\in \\mathbb{R}^d$ that represents the \"qualities\" of the $d$ items being compared; this class of models includes the two most widely used parametric models--the Bradley-Terry-Luce (BTL) and the Thurstone models. Working within a standard minimax framework, we provide tight upper and lower bounds on the optimal error in estimating the quality score vector $w^*$ under this class of models. The bounds depend on the topology of the comparison graph induced by the subset of pairs being compared via its Laplacian spectrum. Thus, in settings where the subset of pairs may be chosen, our results provide principled guidelines for making this choice. Finally, we compare these error rates to those under cardinal measurement models and show that the error rates in the ordinal and cardinal settings have identical scalings apart from constant pre-factors.",
+   "citationCount": null,
+   "directions": [],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "1605.07018",
+   "title": "Online Learning with Feedback Graphs Without the Graphs",
+   "authors": [
+    "Alon Cohen",
+    "Tamir Hazan",
+    "Tomer Koren"
+   ],
+   "year": "2016",
+   "abstract": "We study an online learning framework introduced by Mannor and Shamir (2011) in which the feedback is specified by a graph, in a setting where the graph may vary from round to round and is \\emph{never fully revealed} to the learner. We show a large gap between the adversarial and the stochastic cases. In the adversarial case, we prove that even for dense feedback graphs, the learner cannot improve upon a trivial regret bound obtained by ignoring any additional feedback besides her own loss. In contrast, in the stochastic case we give an algorithm that achieves $\\widetilde Θ(\\sqrt{αT})$ regret over $T$ rounds, provided that the independence numbers of the hidden feedback graphs are at most $α$. We also extend our results to a more general feedback model, in which the learner does not necessarily observe her own loss, and show that, even in simple cases, concealing the feedback graphs might render a learnable problem unlearnable.",
+   "citationCount": null,
+   "directions": [],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "1606.08842",
+   "title": "Active Ranking from Pairwise Comparisons and when Parametric Assumptions Don't Help",
+   "authors": [
+    "Reinhard Heckel",
+    "Nihar B. Shah",
+    "Kannan Ramchandran",
+    "Martin J. Wainwright"
+   ],
+   "year": "2016",
+   "abstract": "We consider sequential or active ranking of a set of n items based on noisy pairwise comparisons. Items are ranked according to the probability that a given item beats a randomly chosen item, and ranking refers to partitioning the items into sets of pre-specified sizes according to their scores. This notion of ranking includes as special cases the identification of the top-k items and the total ordering of the items. We first analyze a sequential ranking algorithm that counts the number of comparisons won, and uses these counts to decide whether to stop, or to compare another pair of items, chosen based on confidence intervals specified by the data collected up to that point. We prove that this algorithm succeeds in recovering the ranking using a number of comparisons that is optimal up to logarithmic factors. This guarantee does not require any structural properties of the underlying pairwise probability matrix, unlike a significant body of past work on pairwise ranking based on parametric models such as the Thurstone or Bradley-Terry-Luce models. It has been a long-standing open question as to whether or not imposing these parametric assumptions allows for improved ranking algorithms. For stochastic comparison models, in which the pairwise probabilities are bounded away from zero, our second contribution is to resolve this issue by proving a lower bound for parametric models. This shows, perhaps surprisingly, that these popular parametric modeling choices offer at most logarithmic gains for stochastic comparisons.",
+   "citationCount": null,
+   "directions": [
+    "topk_pairwise",
+    "ranking_pairwise"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "1707.08238",
+   "title": "A Nearly Instance Optimal Algorithm for Top-k Ranking under the Multinomial Logit Model",
+   "authors": [
+    "Xi Chen",
+    "Yuanzhi Li",
+    "Jieming Mao"
+   ],
+   "year": "2017",
+   "abstract": "We study the active learning problem of top-$k$ ranking from multi-wise comparisons under the popular multinomial logit model. Our goal is to identify the top-$k$ items with high probability by adaptively querying sets for comparisons and observing the noisy output of the most preferred item from each comparison. To achieve this goal, we design a new active ranking algorithm without using any information about the underlying items' preference scores. We also establish a matching lower bound on the sample complexity even when the set of preference scores is given to the algorithm. These two results together show that the proposed algorithm is nearly instance optimal (similar to instance optimal [FLN03], but up to polylog factors). Our work extends the existing literature on rank aggregation in three directions. First, instead of studying a static problem with fixed data, we investigate the top-$k$ ranking problem in an active learning setting. Second, we show our algorithm is nearly instance optimal, which is a much stronger theoretical guarantee. Finally, we extend the pairwise comparison to the multi-wise comparison, which has not been fully explored in ranking literature.",
+   "citationCount": null,
+   "directions": [
+    "topk_pairwise"
+   ],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "1902.02778",
+   "title": "KLUCB Approach to Copeland Bandits",
+   "authors": [
+    "Nischal Agrawal",
+    "Prasanna Chaporkar"
+   ],
+   "year": "2019",
+   "abstract": "Multi-armed bandit(MAB) problem is a reinforcement learning framework where an agent tries to maximise her profit by proper selection of actions through absolute feedback for each action. The dueling bandits problem is a variation of MAB problem in which an agent chooses a pair of actions and receives relative feedback for the chosen action pair. The dueling bandits problem is well suited for modelling a setting in which it is not possible to provide quantitative feedback for each action, but qualitative feedback for each action is preferred as in the case of human feedback. The dueling bandits have been successfully applied in applications such as online rank elicitation, information retrieval, search engine improvement and clinical online recommendation. We propose a new method called Sup-KLUCB for K-armed dueling bandit problem specifically Copeland bandit problem by converting it into a standard MAB problem. Instead of using MAB algorithm independently for each action in a pair as in Sparring and in Self-Sparring algorithms, we combine a pair of action and use it as one action. Previous UCB algorithms such as Relative Upper Confidence Bound(RUCB) can be applied only in case of Condorcet dueling bandits, whereas this algorithm applies to general Copeland dueling bandits, including Condorcet dueling bandits as a special case. Our empirical results outperform state of the art Double Thompson Sampling(DTS) in case of Copeland dueling bandits.",
+   "citationCount": null,
+   "directions": [],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "2107.02274",
+   "title": "Dueling Bandits with Adversarial Sleeping",
+   "authors": [
+    "Aadirupa Saha",
+    "Pierre Gaillard"
+   ],
+   "year": "2021",
+   "abstract": "We introduce the problem of sleeping dueling bandits with stochastic preferences and adversarial availabilities (DB-SPAA). In almost all dueling bandit applications, the decision space often changes over time; eg, retail store management, online shopping, restaurant recommendation, search engine optimization, etc. Surprisingly, this `sleeping aspect' of dueling bandits has never been studied in the literature. Like dueling bandits, the goal is to compete with the best arm by sequentially querying the preference feedback of item pairs. The non-triviality however results due to the non-stationary item spaces that allow any arbitrary subsets items to go unavailable every round. The goal is to find an optimal `no-regret' policy that can identify the best available item at each round, as opposed to the standard `fixed best-arm regret objective' of dueling bandits. We first derive an instance-specific lower bound for DB-SPAA $Ω( \\sum_{i =1}^{K-1}\\sum_{j=i+1}^K \\frac{\\log T}{Δ(i,j)})$, where $K$ is the number of items and $Δ(i,j)$ is the gap between items $i$ and $j$. This indicates that the sleeping problem with preference feedback is inherently more difficult than that for classical multi-armed bandits (MAB). We then propose two algorithms, with near optimal regret guarantees. Our results are corroborated empirically.",
+   "citationCount": null,
+   "directions": [
+    "dueling_bandits"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2110.10825",
+   "title": "$\\ell_{\\infty}$-Bounds of the MLE in the BTL Model under General Comparison Graphs",
+   "authors": [
+    "Wanshan Li",
+    "Shamindra Shrotriya",
+    "Alessandro Rinaldo"
+   ],
+   "year": "2021",
+   "abstract": "The Bradley-Terry-Luce (BTL) model is a popular statistical approach for estimating the global ranking of a collection of items using pairwise comparisons. To ensure accurate ranking, it is essential to obtain precise estimates of the model parameters in the $\\ell_{\\infty}$-loss. The difficulty of this task depends crucially on the topology of the pairwise comparison graph over the given items. However, beyond very few well-studied cases, such as the complete and Erdös-Rényi comparison graphs, little is known about the performance of the maximum likelihood estimator MLE) of the BTL model parameters in the $\\ell_{\\infty}$-loss under more general graph topologies. In this paper, we derive novel, general upper bounds on the $\\ell_{\\infty}$ estimation error of the BTL MLE that depend explicitly on the algebraic connectivity of the comparison graph, the maximal performance gap across items and the sample complexity. We demonstrate that the derived bounds perform well and in some cases are sharper compared to known results obtained using different loss functions and more restricted assumptions and graph topologies. We carefully compare our results to Yan et al. (2012), which is closest in spirit to our work. We further provide minimax lower bounds under $\\ell_{\\infty}$-error that nearly match the upper bounds over a class of sufficiently regular graph topologies. Finally, we study the implications of our $\\ell_{\\infty}$-bounds for efficient (offline) tournament design. We illustrate and discuss our findings through various examples and simulations.",
+   "citationCount": null,
+   "directions": [
+    "bt_sample_complexity"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2211.11957",
+   "title": "Ranking Inferences Based on the Top Choice of Multiway Comparisons",
+   "authors": [
+    "Jianqing Fan",
+    "Zhipeng Lou",
+    "Weichen Wang",
+    "Mengxin Yu"
+   ],
+   "year": "2022",
+   "abstract": "This paper considers ranking inference of $n$ items based on the observed data on the top choice among $M$ randomly selected items at each trial. This is a useful modification of the Plackett-Luce model for $M$-way ranking with only the top choice observed and is an extension of the celebrated Bradley-Terry-Luce model that corresponds to $M=2$. Under a uniform sampling scheme in which any $M$ distinguished items are selected for comparisons with probability $p$ and the selected $M$ items are compared $L$ times with multinomial outcomes, we establish the statistical rates of convergence for underlying $n$ preference scores using both $\\ell_2$-norm and $\\ell_\\infty$-norm, with the minimum sampling complexity. In addition, we establish the asymptotic normality of the maximum likelihood estimator that allows us to construct confidence intervals for the underlying scores. Furthermore, we propose a novel inference framework for ranking items through a sophisticated maximum pairwise difference statistic whose distribution is estimated via a valid Gaussian multiplier bootstrap. The estimated distribution is then used to construct simultaneous confidence intervals for the differences in the preference scores and the ranks of individual items. They also enable us to address various inference questions on the ranks of these items. Extensive simulation studies lend further support to our theoretical results. A real data application illustrates the usefulness of the proposed methods convincingly.",
+   "citationCount": null,
+   "directions": [
+    "bt_sample_complexity"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2310.00750",
+   "title": "Identifying Copeland Winners in Dueling Bandits with Indifferences",
+   "authors": [
+    "Viktor Bengs",
+    "Björn Haddenhorst",
+    "Eyke Hüllermeier"
+   ],
+   "year": "2023",
+   "abstract": "We consider the task of identifying the Copeland winner(s) in a dueling bandits problem with ternary feedback. This is an underexplored but practically relevant variant of the conventional dueling bandits problem, in which, in addition to strict preference between two arms, one may observe feedback in the form of an indifference. We provide a lower bound on the sample complexity for any learning algorithm finding the Copeland winner(s) with a fixed error probability. Moreover, we propose POCOWISTA, an algorithm with a sample complexity that almost matches this lower bound, and which shows excellent empirical performance, even for the conventional dueling bandits problem. For the case where the preference probabilities satisfy a specific type of stochastic transitivity, we provide a refined version with an improved worst case sample complexity.",
+   "citationCount": null,
+   "directions": [
+    "dueling_bandits"
+   ],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "2303.08816",
+   "title": "Borda Regret Minimization for Generalized Linear Dueling Bandits",
+   "authors": [
+    "Yue Wu",
+    "Tao Jin",
+    "Hao Lou",
+    "Farzad Farnoud",
+    "Quanquan Gu"
+   ],
+   "year": "2023",
+   "abstract": "Dueling bandits are widely used to model preferential feedback prevalent in many applications such as recommendation systems and ranking. In this paper, we study the Borda regret minimization problem for dueling bandits, which aims to identify the item with the highest Borda score while minimizing the cumulative regret. We propose a rich class of generalized linear dueling bandit models, which cover many existing models. We first prove a regret lower bound of order $Ω(d^{2/3} T^{2/3})$ for the Borda regret minimization problem, where $d$ is the dimension of contextual vectors and $T$ is the time horizon. To attain this lower bound, we propose an explore-then-commit type algorithm for the stochastic setting, which has a nearly matching regret upper bound $\\tilde{O}(d^{2/3} T^{2/3})$. We also propose an EXP3-type algorithm for the adversarial linear setting, where the underlying model parameter can change at each round. Our algorithm achieves an $\\tilde{O}(d^{2/3} T^{2/3})$ regret, which is also optimal. Empirical evaluations on both synthetic data and a simulated real-world environment are conducted to corroborate our theoretical analysis.",
+   "citationCount": null,
+   "directions": [
+    "dueling_bandits"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2301.11270",
+   "title": "Principled Reinforcement Learning with Human Feedback from Pairwise or $K$-wise Comparisons",
+   "authors": [
+    "Banghua Zhu",
+    "Jiantao Jiao",
+    "Michael I. Jordan"
+   ],
+   "year": "2023",
+   "abstract": "We provide a theoretical framework for Reinforcement Learning with Human Feedback (RLHF). Our analysis shows that when the true reward function is linear, the widely used maximum likelihood estimator (MLE) converges under both the Bradley-Terry-Luce (BTL) model and the Plackett-Luce (PL) model. However, we show that when training a policy based on the learned reward model, MLE fails while a pessimistic MLE provides policies with improved performance under certain coverage assumptions. Additionally, we demonstrate that under the PL model, the true MLE and an alternative MLE that splits the $K$-wise comparison into pairwise comparisons both converge. Moreover, the true MLE is asymptotically more efficient. Our results validate the empirical success of existing RLHF algorithms in InstructGPT and provide new insights for algorithm design. Furthermore, our results unify the problem of RLHF and max-entropy Inverse Reinforcement Learning (IRL), and provide the first sample complexity bound for max-entropy IRL.",
+   "citationCount": null,
+   "directions": [
+    "bt_sample_complexity"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2402.07445",
+   "title": "Top-$K$ ranking with a monotone adversary",
+   "authors": [
+    "Yuepeng Yang",
+    "Antares Chen",
+    "Lorenzo Orecchia",
+    "Cong Ma"
+   ],
+   "year": "2024",
+   "abstract": "In this paper, we address the top-$K$ ranking problem with a monotone adversary. We consider the scenario where a comparison graph is randomly generated and the adversary is allowed to add arbitrary edges. The statistician's goal is then to accurately identify the top-$K$ preferred items based on pairwise comparisons derived from this semi-random comparison graph. The main contribution of this paper is to develop a weighted maximum likelihood estimator (MLE) that achieves near-optimal sample complexity, up to a $\\log^2(n)$ factor, where $n$ denotes the number of items under comparison. This is made possible through a combination of analytical and algorithmic innovations. On the analytical front, we provide a refined~$\\ell_\\infty$ error analysis of the weighted MLE that is more explicit and tighter than existing analyses. It relates the~$\\ell_\\infty$ error with the spectral properties of the weighted comparison graph. Motivated by this, our algorithmic innovation involves the development of an SDP-based approach to reweight the semi-random graph and meet specified spectral properties. Additionally, we propose a first-order method based on the Matrix Multiplicative Weight Update (MMWU) framework. This method efficiently solves the resulting SDP in nearly-linear time relative to the size of the semi-random comparison graph.",
+   "citationCount": null,
+   "directions": [
+    "topk_pairwise"
+   ],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "2404.06013",
+   "title": "Feel-Good Thompson Sampling for Contextual Dueling Bandits",
+   "authors": [
+    "Xuheng Li",
+    "Heyang Zhao",
+    "Quanquan Gu"
+   ],
+   "year": "2024",
+   "abstract": "Contextual dueling bandits, where a learner compares two options based on context and receives feedback indicating which was preferred, extends classic dueling bandits by incorporating contextual information for decision-making and preference learning. Several algorithms based on the upper confidence bound (UCB) have been proposed for linear contextual dueling bandits. However, no algorithm based on posterior sampling has been developed in this setting, despite the empirical success observed in traditional contextual bandits. In this paper, we propose a Thompson sampling algorithm, named FGTS.CDB, for linear contextual dueling bandits. At the core of our algorithm is a new Feel-Good exploration term specifically tailored for dueling bandits. This term leverages the independence of the two selected arms, thereby avoiding a cross term in the analysis. We show that our algorithm achieves nearly minimax-optimal regret, i.e., $\\tilde{\\mathcal{O}}(d\\sqrt T)$, where $d$ is the model dimension and $T$ is the time horizon. Finally, we evaluate our algorithm on synthetic data and observe that FGTS.CDB outperforms existing algorithms by a large margin.",
+   "citationCount": null,
+   "directions": [
+    "dueling_bandits"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2512.24959",
+   "title": "Semi-overlapping Multi-bandit Best Arm Identification for Sequential Support Network Learning",
+   "authors": [
+    "András Antos",
+    "András Millinghoffer",
+    "Péter Antal"
+   ],
+   "year": "2025",
+   "abstract": "Many modern AI and ML problems require evaluating partners' contributions through shared yet asymmetric, computationally intensive processes and the simultaneous selection of the most beneficial candidates. Sequential approaches to these problems can be unified under a new framework, Sequential Support Network Learning (SSNL), in which the goal is to select the most beneficial candidate set of partners for all participants using trials; that is, to learn a directed graph that represents the highest-performing contributions. We demonstrate that a new pure-exploration model, the semi-overlapping multi-(multi-armed) bandit (SOMMAB), in which a single evaluation provides distinct feedback to multiple bandits due to structural overlap among their arms, can be used to learn a support network from sparse candidate lists efficiently. We develop a generalized GapE algorithm for SOMMABs and derive new exponential error bounds that improve the best known constant in the exponent for multi-bandit best-arm identification. The bounds scale linearly with the degree of overlap, revealing significant sample-complexity gains arising from shared evaluations. From an application point of view, this work provides a theoretical foundation and improved performance guarantees for sequential learning tools for identifying support networks from sparse candidates in multiple learning problems, such as in multi-task learning (MTL), auxiliary task learning (ATL), federated learning (FL), and in multi-agent systems (MAS).",
+   "citationCount": 0,
+   "directions": [
+    "graph_bandit"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2609.39351",
+   "title": "On the Complexity of Preference-Based Bandits",
+   "authors": [
+    "Ahmed Ben Yahmed",
+    "Marc Abeille",
+    "Clément Calauzènes"
+   ],
+   "year": "2026",
+   "abstract": "We study preference-based bandits with general reward function classes, where a learner sequentially selects pairs of arms and observes binary preference feedback governed by the Bradley--Terry model. This setting naturally arises in applications such as recommender systems, tournament ranking, and learning from human feedback, where relative preferences are easier to elicit than absolute rewards. The observation model inherits the logistic bandit challenge of handling the problem-dependent constant $κ$, which accounts for the non-linearity of the link function and can grow arbitrarily large. Moreover, prior work has predominantly focused on linear or kernelized reward models, precluding the use of richer function classes. To address these limitations, we consider general reward function classes and introduce the \\emph{locally sensitive eluder dimension}, a novel complexity measure tailored to the logistic structure of preference feedback that yields fine-grained regret guarantees without unfavorable dependence on $κ$. Building on this notion, we propose \\textbf{GINOP} (Generic INformative OPtimism), an algorithm that constructs log-loss confidence sets and jointly selects arm pairs to balance optimism and informative exploration. We establish a first-order regret bound that, in contrast with what previous results suggest, demonstrates that learning with preference feedback is as statistically efficient as learning from direct reward observation. Finally, we corroborate our theoretical findings with empirical evaluations against competitive baselines.",
+   "citationCount": null,
+   "directions": [],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "2610.06237",
+   "title": "Bradley-Terry model under general comparison graphs",
+   "authors": [
+    "Ruijian Han",
+    "Yuanhang Luo",
+    "Yiming Xu"
+   ],
+   "year": "2026",
+   "abstract": "The Bradley-Terry model is a parametric model for ranking from pairwise comparisons. Existing asymptotic theory for the maximum likelihood estimator (MLE) in regimes where the number of objects grows often requires homogeneity assumptions or compatibility conditions on comparison graphs, which limits its applicability to many practical settings. In this work, we establish uniform consistency of the MLE under general deterministic comparison designs. Our pairwise error bound consists of a pair-specific term governed by the effective resistance between the corresponding objects and a global term governed by the spectral gap of the unnormalized graph Laplacian. The bound is tight up to logarithmic factors for certain graph sequences. For any prespecified sequence of pairs satisfying an additional balancing condition, we further establish asymptotic normality of the corresponding estimated utility differences. As an application, we obtain uniform consistency for independent-edge random graph designs whenever the minimum edge probability exceeds the Erdős-Rényi connectivity threshold by a logarithmic factor, as well as asymptotic normality under additional balancing conditions.",
+   "citationCount": 0,
+   "directions": [
+    "ranking_pairwise"
+   ],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "2610.09030",
+   "title": "Graph-monotone entrywise guarantees for MLE and Rank Centrality on general comparison graphs",
+   "authors": [
+    "Yuepeng Yang",
+    "Cong Ma"
+   ],
+   "year": "2026",
+   "abstract": "Pairwise comparisons are widely used to infer latent scores and identify top-ranked items. Although sharp statistical guarantees are available under uniform sampling, real data often induce irregular comparison graphs with heterogeneous observation counts across pairs. In this paper, we study an arbitrary fixed comparison graph under the Bradley--Terry--Luce model with minimal assumptions. We prove that both the standard maximum likelihood estimator and Rank Centrality achieve a high-probability entrywise error rate of order $1/\\sqrt{λ_{\\mathcal{D}}}$ up to logarithmic and dynamic-range factors, where $λ_{\\mathcal{D}}$ is the algebraic connectivity of the count-weighted observation graph. This guarantee is graph-monotone since $λ_{\\mathcal{D}}$ cannot decrease when additional comparisons are added. Under heterogeneous sampling, where comparison pairs are sampled independently with unequal probabilities, our guarantee improves existing error bounds or requires weaker assumptions. We further extend our analysis to show that both estimators are robust against outcome-adaptive augmentation, where an adversary can choose additional comparison pairs after observing the initial outcomes.",
+   "citationCount": 0,
+   "directions": [],
+   "from_seed": true
+  },
+  {
+   "arxiv_id": "2610.20908",
+   "title": "Replicable Dueling Bandits",
+   "authors": [
+    "Rohan Deb",
+    "Aadirupa Saha",
+    "Udaya Ghai",
+    "Karan Singh",
+    "Arindam Banerjee"
+   ],
+   "year": "2026",
+   "abstract": "Dueling bandits choose each comparison based on earlier noisy outcomes, so two runs on the same preferences can compare different pairs. We study replicable dueling bandits, where two executions with shared internal randomness and independent comparison outcomes must select the same ordered pair in every round with probability at least $1-ρ$. Building on Beat-the-Mean, whose scores change as arms are eliminated and need not rank the best arm highest, we design the first such algorithms with sublinear regret. Under relaxed stochastic transitivity with parameter $γ\\ge 1$ and the stochastic triangle inequality, we design an algorithm that achieves expected regret $\\widetilde{O}(γ^8 K^4 H_{\\mathrm{p}}/ρ^2)$, where $H_{\\mathrm{p}}=\\sum_{i=2}^{K}(P_{1i}-1/2)^{-1}$. Under strong stochastic transitivity, we design an algorithm based on simultaneous elimination that improves the dependence on $K$ and achieves $\\widetilde{O}(K^2 H_{\\mathrm{p}}/ρ^2)$ regret. For linear dueling bandits, we design an algorithm that achieves regret $\\widetilde{O}(d^3\\sqrt{T}/(c_μρ))$. Experiments on synthetic and language-model preferences show replicability, with sublinear regret.",
+   "citationCount": null,
+   "directions": [
+    "dueling_bandits"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2604.00523",
+   "title": "Lipschitz Dueling Bandits over Continuous Action Spaces",
+   "authors": [
+    "Mudit Sharma",
+    "Shweta Jain",
+    "Vaneet Aggarwal",
+    "Ganesh Ghalme"
+   ],
+   "year": "2026",
+   "abstract": "We study for the first time, stochastic dueling bandits over continuous action spaces with Lipschitz structure, where feedback is purely comparative. While dueling bandits and Lipschitz bandits have been studied separately, their combination has remained unexplored. We propose the first algorithm for Lipschitz dueling bandits, using round-based exploration and recursive region elimination guided by an adaptive reference arm. We develop new analytical tools for relative feedback and prove a regret bound of $\\tilde O\\left(T^{\\frac{d_z+1}{d_z+2}}\\right)$, where $d_z$ is the zooming dimension of the near-optimal region. Further, our algorithm takes only logarithmic space in terms of the total time horizon, best achievable by any bandit algorithm over a continuous action space.",
+   "citationCount": null,
+   "directions": [
+    "dueling_bandits"
+   ],
+   "from_seed": false
+  },
+  {
+   "arxiv_id": "2607.08979",
+   "title": "Optimal Top-$k$ Identification from Pairwise Comparisons",
+   "authors": [
+    "Motti Goldberger",
+    "Nils Rudi"
+   ],
+   "year": "2026",
+   "abstract": "We study the active learning problem of fixed-confidence top-$k$ identification from noisy pairwise comparisons. In this problem, an algorithm sequentially chooses pairs of items to compare, observes the outcomes, and stops when it can return the set of top-$k$ items with error probability at most $δ$. The objective is to design such a $δ$-correct procedure that minimizes the expected number of comparisons (the sample complexity). This problem falls within the broader literature on fixed-confidence pure exploration in bandit models, where a common target is asymptotic optimality: the algorithm's expected sample complexity matches the information theoretic lower bound as $δ\\to 0$. Asymptotically optimal procedures have been developed for a range of fixed-confidence pure-exploration problems, however to the best of our knowledge, for top-$1$, or more generally top-$k$ identification from pairwise comparisons under latent utility models an asymptotically optimal algorithm has not been established. In this setting, we develop such an algorithm. We characterize the structure of the lower bound and formulate it as a saddle-point problem. This structure enables a computationally efficient primal-dual procedure that learns the asymptotically optimal comparison allocation online. We then construct an adaptive comparison-allocation algorithm that tracks the allocation learned by the primal-dual procedure and prove it is asymptotically optimal.",
+   "citationCount": null,
+   "directions": [
+    "topk_pairwise"
+   ],
+   "from_seed": false
+  }
+ ]
+}
