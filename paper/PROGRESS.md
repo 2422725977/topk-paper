@@ -106,3 +106,16 @@
   3. 自测输出：`planted fake 0.98765 flagged = True; comment-fake 0.11111 ignored = True; clean file has 0 unmatched = True`，exit 0。
   - 自测过程中发现并修复 checker 自身一个 bug：结构排除模式未覆盖 `Theorem~4.1` 的 LaTeX 不换行符 `~`（首轮自测报 clean 文件含未匹配 '4.1'）。
 - **真实检查**：当前 `paper/` 下尚无 .tex（Wave 1/2 才写正文）→ `no .tex files under paper/ yet -- nothing to check (Wave 0); exit 0`。Wave 1 起每次编译前必须跑。
+
+## Wave 0 完成情况表（验收对照 SPEC 第 9 节 + run-paper.sh）
+
+| # | 任务 | 实际产出 | 验收 | 结果 |
+|---|---|---|---|---|
+| W0.1 | fetch_refs.py | `paper/fetch_refs.py`、`refs.bib`（35 条，全脚本生成）、`refs_raw.json`（35 篇摘要+引用数） | `grep -c '^@'` = 35 ≥ 25 ✓；每条有真实 arxiv_id（arXiv API 抓取时验证）✓；五方向查询全部实际执行 ✓ | 通过 |
+| W0.2 | SURVEY（闸门） | `paper/SURVEY.md`（界清单 4 表 + 逐条对照 + 三选一结论）；结论写进本文件 | 每方向摘要阅读 ≥8（实际 35 篇全读）✓；三选一明确 = **第三条（保持原定位，附 5 条强制修订）**✓；未触发 STOP | 通过 |
+| W0.3 | simulate.py | `paper/code/simulate.py`（BT 采样器 + 5 种图生成器 + eigvalsh 实测 λ_G） | 五种图 λ_G 已打印且与理论一致（complete=20=n ✓, star=1 ✓, cycle≈4π²/n² ✓, dumbbell 瓶颈小 ✓）| 通过 |
+| W0.4 | algorithms.py | 三算法 + `test_algorithms.py`；调试修复 4 个真实 bug（标签方向/规范奇异/饱和发散/采样稀释+对比淘汰） | `pytest`: **7 passed**；n=5、Δ=2 与 Δ=1 易例上三算法各 100/100 正确；k∈{1,2,3}；稀疏图冒烟非 capped | 通过 |
+| W0.5 | E1+E3 | `paper/results/e1.json`、`e3.json`（含全部逐次原始数据）；斜率写入上节 | E1 9 配置 × 100 次、E3 15 点 × 100 次（实数）✓；成功率全部 1.00 ✓；拟合斜率 -1.377/-1.557 已如实写入 ✓ | 通过（斜率与 -2 的差距已归因并列为 Wave 1 待办） |
+| W0.6 | check_paper.py | `paper/check_paper.py` + 自测通过 | 植入假数字 0.98765 能检出 ✓、注释内假数字被忽略 ✓、干净文件 0 未匹配 ✓；真实检查（无 tex）exit 0 ✓ | 通过 |
+
+**未完成项**：无。**Wave 1 风险提示**：(1) 定理 4.1 证明中 1/λ_G 项的推导是关键难点（SPEC 第 4 节）；(2) 算法置信区间需把"有界范围截断 + Bernstein 线性项"升级为单侧饱和界，才能让 E3 斜率回到 ≈ -2 并支撑 δ-正确性证明；(3) E2/E4/E5 未跑（属 Wave 1）；(4) 正文 tex 未写（属 Wave 1/2），check_paper.py 就绪待命。
