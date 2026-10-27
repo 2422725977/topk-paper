@@ -40,3 +40,17 @@
   - Zoghi et al.《Dueling Bandits: Beyond Condorcet Winners》标题检索无 arXiv 条目
   - Feige et al. 1994《Computing with Noisy Information》（pre-arXiv）
   - 全文访问类经典（Mannor & Shamir 2011 侧观察）以 arXiv 版 1605.07018（Alon et al.）替代入库。
+## W0.3 sim（simulate.py：BT 采样器 + 5 种图 + 实测 λ_G）
+
+- 模块：`paper/code/simulate.py`（numpy eigvalsh 实测 Laplacian 次小特征值，无近似公式）。
+- n=20 实测 λ_G（`python3 paper/code/simulate.py` 真实输出）：
+
+| 图 | 边数 | λ_G 实测 | 理论对照 |
+|---|---|---|---|
+| complete | 190 | 20.000000 | = n ✓ |
+| random (p=0.2, seed 0) | 36 | 0.471785 | np≈4 量级 ✓ |
+| cycle | 20 | 0.097887 | 4π²/n² = 0.0987 ✓ |
+| star | 19 | 1.000000 | 恰为 1 ✓ |
+| dumbbell (2×10 团+桥) | 91 | 0.169048 | 瓶颈小 ✓ |
+
+- BT 采样器 sanity：θ=[2,0] 时 10 万次比较经验胜率 0.8826 vs sigmoid(2)=0.8808 ✓。
