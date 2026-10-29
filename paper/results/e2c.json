@@ -1,0 +1,98 @@
+{
+ "experiment": "E2c",
+ "estimator": "uniform_edge_topk (one-shot per-edge MLE)",
+ "n": 50,
+ "delta": 0.5,
+ "ci_level_pct": 95,
+ "reps_per_point": 50,
+ "success_target": 0.95,
+ "families": [
+  {
+   "graph": "complete",
+   "k": 25,
+   "m_edges": 1225,
+   "lambda_G": 49.99999999999986,
+   "m_star": 8,
+   "T_star": 9800,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.62,
+     "T_total": 1225
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.74,
+     "T_total": 2450
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.94,
+     "T_total": 4900
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.98,
+     "T_total": 9800
+    }
+   ]
+  },
+  {
+   "graph": "dumbbell",
+   "k": 25,
+   "m_edges": 601,
+   "lambda_G": 0.07427841790244623,
+   "m_star": 64,
+   "T_star": 38464,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.48,
+     "T_total": 601
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.26,
+     "T_total": 1202
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.44,
+     "T_total": 2404
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.62,
+     "T_total": 4808
+    },
+    {
+     "m_per_edge": 16,
+     "reps": 50,
+     "success_rate": 0.84,
+     "T_total": 9616
+    },
+    {
+     "m_per_edge": 32,
+     "reps": 50,
+     "success_rate": 0.88,
+     "T_total": 19232
+    },
+    {
+     "m_per_edge": 64,
+     "reps": 50,
+     "success_rate": 0.98,
+     "T_total": 38464
+    }
+   ]
+  }
+ ],
+ "T_star_ratio_dumbbell_over_complete": 3.9248979591836735
+}

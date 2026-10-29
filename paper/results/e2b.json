@@ -1,0 +1,249 @@
+{
+ "experiment": "E2b",
+ "estimator": "uniform_edge_topk (one-shot per-edge MLE)",
+ "n": 20,
+ "delta": 0.5,
+ "delta_conf": 0.05,
+ "k": 3,
+ "ci_level_pct": 95,
+ "reps_per_point": 50,
+ "success_target": 0.95,
+ "families": [
+  {
+   "graph": "complete",
+   "m_edges": 190,
+   "lambda_G": 19.999999999999968,
+   "inv_lambda_G": 0.05000000000000008,
+   "m_edges_over_lambda": 9.500000000000016,
+   "m_star": 8,
+   "T_star": 1520,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.7,
+     "T_total": 190
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.7,
+     "T_total": 380
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.9,
+     "T_total": 760
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.96,
+     "T_total": 1520
+    }
+   ]
+  },
+  {
+   "graph": "random_p0.2",
+   "m_edges": 39,
+   "lambda_G": 0.5075897325805825,
+   "inv_lambda_G": 1.9700950114101152,
+   "m_edges_over_lambda": 76.8337054449945,
+   "m_star": 128,
+   "T_star": 4992,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.1,
+     "T_total": 39
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.2,
+     "T_total": 78
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.34,
+     "T_total": 156
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.46,
+     "T_total": 312
+    },
+    {
+     "m_per_edge": 16,
+     "reps": 50,
+     "success_rate": 0.64,
+     "T_total": 624
+    },
+    {
+     "m_per_edge": 32,
+     "reps": 50,
+     "success_rate": 0.84,
+     "T_total": 1248
+    },
+    {
+     "m_per_edge": 64,
+     "reps": 50,
+     "success_rate": 0.9,
+     "T_total": 2496
+    },
+    {
+     "m_per_edge": 128,
+     "reps": 50,
+     "success_rate": 1.0,
+     "T_total": 4992
+    }
+   ]
+  },
+  {
+   "graph": "star",
+   "m_edges": 19,
+   "lambda_G": 0.9999999999999991,
+   "inv_lambda_G": 1.0000000000000009,
+   "m_edges_over_lambda": 19.000000000000018,
+   "m_star": 64,
+   "T_star": 1216,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.04,
+     "T_total": 19
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.28,
+     "T_total": 38
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.42,
+     "T_total": 76
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.48,
+     "T_total": 152
+    },
+    {
+     "m_per_edge": 16,
+     "reps": 50,
+     "success_rate": 0.72,
+     "T_total": 304
+    },
+    {
+     "m_per_edge": 32,
+     "reps": 50,
+     "success_rate": 0.74,
+     "T_total": 608
+    },
+    {
+     "m_per_edge": 64,
+     "reps": 50,
+     "success_rate": 0.96,
+     "T_total": 1216
+    }
+   ]
+  },
+  {
+   "graph": "dumbbell",
+   "m_edges": 91,
+   "lambda_G": 0.1690481051547048,
+   "inv_lambda_G": 5.915475947422466,
+   "m_edges_over_lambda": 538.3083112154444,
+   "m_star": 16,
+   "T_star": 1456,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.46,
+     "T_total": 91
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.62,
+     "T_total": 182
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.78,
+     "T_total": 364
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.92,
+     "T_total": 728
+    },
+    {
+     "m_per_edge": 16,
+     "reps": 50,
+     "success_rate": 1.0,
+     "T_total": 1456
+    }
+   ]
+  },
+  {
+   "graph": "cycle",
+   "m_edges": 20,
+   "lambda_G": 0.0978869674096921,
+   "inv_lambda_G": 10.21586454726543,
+   "m_edges_over_lambda": 204.31729094530857,
+   "m_star": 32,
+   "T_star": 640,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.0,
+     "T_total": 20
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.08,
+     "T_total": 40
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.34,
+     "T_total": 80
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.68,
+     "T_total": 160
+    },
+    {
+     "m_per_edge": 16,
+     "reps": 50,
+     "success_rate": 0.76,
+     "T_total": 320
+    },
+    {
+     "m_per_edge": 32,
+     "reps": 50,
+     "success_rate": 0.96,
+     "T_total": 640
+    }
+   ]
+  }
+ ],
+ "loglog_slope_Tstar_vs_medges_over_lambda": -0.05556034933822667
+}

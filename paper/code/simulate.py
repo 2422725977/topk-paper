@@ -173,3 +173,15 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+def make_theta_bounded(n: int, gap: float, k: int, B: float = 3.0) -> np.ndarray:
+    """Bounded-dynamic-range utilities: tanh profile centered on the top-k boundary.
+
+    Item k-1 sits at about +gap/2 and item k at about -gap/2, so the top-k boundary
+    gap equals `gap` (up to the sech^2 correction), while the range stays in [-B, B].
+    This matches the bounded-range condition (Condition B in the paper) under which
+    Theorem 4.2 is stated; the equispaced make_theta above is kept for reference.
+    """
+    i = np.arange(n)
+    return B * np.tanh((k - 0.5 - i) * float(gap) / B)

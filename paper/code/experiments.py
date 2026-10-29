@@ -25,7 +25,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from simulate import complete_graph, lambda_G, make_theta
+from simulate import complete_graph, lambda_G, make_theta_bounded
 from algorithms import graph_walk_elimination
 
 RESULTS = Path(__file__).resolve().parent.parent / "results"
@@ -41,7 +41,7 @@ def truth_topk(n: int, k: int) -> set[int]:
 def run_cell(n: int, delta: float, reps: int, seed0: int = 0) -> dict:
     G = complete_graph(n)
     lam = lambda_G(G)
-    theta = make_theta(n, delta, np.random.default_rng(0))
+    theta = make_theta_bounded(n, delta, K)
     truth = truth_topk(n, K)
     T_raw, success_raw, rounds_raw = [], [], []
     t0 = time.time()
@@ -76,8 +76,9 @@ def run_cell(n: int, delta: float, reps: int, seed0: int = 0) -> dict:
 def e1(reps: int = REPS) -> dict:
     out = {"experiment": "E1", "algorithm": "graph_walk_elimination", "graph": "complete",
            "delta_conf": DELTA_CONF, "k": K, "reps_per_config": reps, "ci_level_pct": 95,
-           "description": "T vs n/Delta^2 on the complete graph; algorithm is delta-correct "
-                          "with delta=0.05 so its consumption is the T of interest",
+           "description": "T vs n/Delta^2 on the complete graph with bounded-range "
+                          "(tanh, B=3) utilities; algorithm is delta-correct with delta=0.05 "
+                          "so its consumption is the T of interest",
            "configs": []}
     for n in (10, 20, 50):
         for delta in (0.2, 0.5, 1.0):

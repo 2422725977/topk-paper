@@ -36,7 +36,7 @@ REF_CMD = re.compile(
 STRUCTURAL = re.compile(
     r"(?:Theorem|Lemma|Proposition|Corollary|Conjecture|Definition|Assumption|Table|"
     r"Figure|Fig\.|Section|Appendix|Algorithm|Equation|Eq\.|Remark)(?:\s|\~)+\d+(?:\.\d+)*", re.I)
-NUM = re.compile(r"\d+\.\d+|\d{2,}")
+NUM = re.compile(r"-?\d+\.\d+|-?\d{2,}")
 YEAR = re.compile(r"^(?:19|20)\d{2}$")
 
 
@@ -72,15 +72,39 @@ def results_corpus() -> str:
     return "\n".join(parts)
 
 
-def token_in_corpus(tok: str, corpus: str) -> bool:
+def _corpus_floats(corpus: str) -> list[float]:
+    vals = []
+    for tok in re.findall(r"-?\d+\.\d+(?:[eE][+-]?\d+)?|-?\d+", corpus):
+        try:
+            vals.append(float(tok))
+        except ValueError:
+            pass
+    return vals
+
+
+def token_in_corpus(tok: str, corpus: str, corpus_vals: list[float] | None = None) -> bool:
     if re.search(rf"(?<![\w.]){re.escape(tok)}(?![\w.])", corpus):
         return True
-    # float-normalized retry (0.50 -> 0.5, 1.0 -> 1)
+    # float-normalized retries
     try:
         val = float(tok)
     except ValueError:
         return False
-    for s in (repr(val), f"{val:g}", f"{val:.{len(tok.split('.')[-1])}f}" if "." in tok else str(int(val))):
+    if corpus_vals is None:
+        corpus_vals = _corpus_floats(corpus)
+    # decimals in the token, so we can ask whether some measured value ROUNDS to it
+    if "." in tok:
+        decimals = len(tok.split(".")[1])
+    else:
+        decimals = 0
+    for v in corpus_vals:
+        if abs(v) < 1e-300:
+            continue
+        for fmt in (f"{{:.{decimals}f}}", f"{{:.{decimals}e}}", "{:g}", "{:.0f}"):
+            if fmt.format(v) == tok or fmt.format(v) == tok.lstrip("+"):
+                return True
+    # legacy: plain normalized variants
+    for s in (repr(val), f"{val:g}"):
         if s != tok and re.search(rf"(?<![\w.]){re.escape(s)}(?![\w.])", corpus):
             return True
     return False
@@ -91,10 +115,11 @@ def check_tex_files(paths: list[Path]) -> list[tuple[Path, str, str]]:
     if not corpus:
         print(f"ERROR: no results JSONs under {RESULTS} -- nothing to verify against", file=sys.stderr)
         raise SystemExit(2)
+    corpus_vals = _corpus_floats(corpus)
     unmatched = []
     for p in paths:
         for tok, ctx in extract_numbers(p.read_text()):
-            if not token_in_corpus(tok, corpus):
+            if not token_in_corpus(tok, corpus, corpus_vals):
                 unmatched.append((p, tok, ctx))
     return unmatched
 

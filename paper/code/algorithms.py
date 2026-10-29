@@ -44,7 +44,7 @@ _STEP_CLIP = 10.0
 # Declared algorithm assumption: |theta_i - theta_j| <= D_MAX (bounded dynamic
 # range, the standard regime in the top-k literature).  Confidence radii use the
 # plug-in curvature sigma'(d_hat) with d_hat clipped to [-D_MAX, D_MAX].
-_D_MAX = 2.0
+_D_MAX = 3.0
 _CURV_FLOOR = 1e-9  # numerical safety only
 # Bernstein-type linear term for the sub-exponential tails of the logistic MLE:
 # radius_i = sqrt(2 x p_i) + BERNSTEIN_LIN * x * p_i with x the union-bound
@@ -222,7 +222,8 @@ def uniform_majority(theta: np.ndarray, G: dict, k: int, budget: int,
 # 2)+3) shared elimination engine
 # ---------------------------------------------------------------------------
 def _run_elimination(theta: np.ndarray, G: dict, k: int, delta: float,
-                     rng: np.random.Generator, scheme: str) -> tuple[list[int], int, dict]:
+                     rng: np.random.Generator, scheme: str,
+                     max_T: int | None = None) -> tuple[list[int], int, dict]:
     n = G["n"]
     indptr, indices, deg = _flat_adjacency(G)
     acc: dict = {}
@@ -294,6 +295,10 @@ def _run_elimination(theta: np.ndarray, G: dict, k: int, delta: float,
             S = sorted(new_active, key=lambda i: -theta_hat[i])
             return S, T, {"rounds": r, "t_history": t_history, "capped": False}
         active = new_active
+        if max_T is not None and T >= max_T:
+            # budget exhausted: return the current MAP estimate of the top-k
+            S = sorted(active, key=lambda i: -theta_hat[i])[:k]
+            return S, T, {"rounds": r, "t_history": t_history, "capped": True, "budget_capped": True}
         if c < _C_MAX:
             c *= 2
         else:
@@ -303,14 +308,16 @@ def _run_elimination(theta: np.ndarray, G: dict, k: int, delta: float,
 
 
 def successive_elimination(theta: np.ndarray, G: dict, k: int, delta: float,
-                           rng: np.random.Generator | None = None) -> tuple[list[int], int, dict]:
+                           rng: np.random.Generator | None = None,
+                           max_T: int | None = None) -> tuple[list[int], int, dict]:
     """Successive elimination with uniform-neighbor sampling and doubling rounds."""
     rng = rng or np.random.default_rng()
-    return _run_elimination(theta, G, k, delta, rng, scheme="uniform_neighbors")
+    return _run_elimination(theta, G, k, delta, rng, scheme="uniform_neighbors", max_T=max_T)
 
 
 def graph_walk_elimination(theta: np.ndarray, G: dict, k: int, delta: float,
-                           rng: np.random.Generator | None = None) -> tuple[list[int], int, dict]:
+                           rng: np.random.Generator | None = None,
+                           max_T: int | None = None) -> tuple[list[int], int, dict]:
     """The paper's algorithm: per-item random-walk comparisons + CI elimination."""
     rng = rng or np.random.default_rng()
-    return _run_elimination(theta, G, k, delta, rng, scheme="random_walk")
+    return _run_elimination(theta, G, k, delta, rng, scheme="random_walk", max_T=max_T)
