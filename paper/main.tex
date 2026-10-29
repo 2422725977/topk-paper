@@ -6,6 +6,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{tikz}
+\usepackage{multicol}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 
 \newtheorem{theorem}{Theorem}[section]
@@ -39,7 +40,7 @@ comparisons, where $m$ is the number of edges, $\Delta$ is the gap between the $
 \section{Introduction}
 \label{sec:intro}
 
-Pairwise-comparison data underlies ranking systems in which only \emph{relative} feedback is available: model evaluation platforms compare two systems at a time, peer grading compares two submissions, and preference elicitation compares two alternatives.  In several of these applications the set of comparable pairs is \emph{restricted} before any data is collected.  A model leaderboard may only pit systems of the same size class against each other; a tournament schedule fixes the pairings in advance; a peer-grading system compares submissions within the same assignment track.  In all these cases the learner does not control which pairs can be measured: the feasible pairs form a comparison graph $G$ given to the learner, and each edge of $G$ can only be measured repeatedly.
+Pairwise-comparison data underlies ranking systems in which only \emph{relative} feedback is available: model evaluation platforms compare two systems at a time, peer grading compares two submissions, and preference elicitation compares two alternatives.  In several of these applications the set of comparable pairs is \emph{restricted} before any data is collected: leaderboards pit same-size systems against each other, tournaments fix pairings in advance, peer grading compares submissions within a track.  The feasible pairs form a comparison graph $G$ given to the learner, and each edge may be measured repeatedly.
 
 This paper asks how the connectivity of $G$ affects the number of comparisons needed to identify the top-$k$ items with probability $1-\delta$ under a Bradley--Terry (BT) model.  When $G$ is the complete graph the problem reduces to the classical, by now well-understood full-access setting, where the sample complexity is $\Theta\!\left(\frac{n}{k}\,\frac{\log n}{\Delta^2}\right)$ up to log factors \cite{shah2015simple,heckel2018approximate,chen2017spectral,goldberger2026optimal}.  For a general graph the answer must depend on how easily information travels in $G$: for estimation of the utility vector, it is by now established that the algebraic connectivity $\lG$ (the second-smallest eigenvalue of the graph Laplacian) governs the difficulty \cite{shah2015estimation,li2021ellinftybounds,yang2026graphmonotone,han2026bradleyterry}.  Our contribution is to transport this dependence to the \emph{identification} problem, where the object of interest is a decision (the top-$k$ set) rather than the utility vector itself.
 
@@ -50,21 +51,21 @@ $T \le C\, m\,\kappa^2 \log(n/\delta)\,/\,(\sigma_{\min}\lG\Delta^2)$
 comparisons, where $m=|E(G)|$, $\sigma_{\min}=\sigma'(2B)$ and $\kappa$ depends only on the dynamic range $B$.  For bounded-degree graphs $m=\Theta(n)$, so $T = \tilde O(n\,/\,(\lG\Delta^2))$.
 \item \textbf{Lower bound (Theorem~\ref{thm:lower}).}  (a) Every $\delta$-correct algorithm needs $\Omega(\log(1/\delta)/\Delta^2)$ comparisons on any graph.  (b) Every $\delta$-correct algorithm that is \emph{edge-balanced} (Definition~\ref{def:balanced}) needs $\Omega\!\left(m\log(1/\delta)\,/\,(n\,\lG\,\Delta^2)\right)$ comparisons.  For bounded-degree graphs this matches the upper bound up to log factors.  The removal of the balancedness restriction is open (Conjecture~\ref{conj:adaptive}); we explain why it cannot hold verbatim.
 \item \textbf{Complete-graph consistency (Proposition~\ref{prop:complete}).}  Both bounds degenerate to the classical full-access rates, which serves as a self-check of the derivations.
-\item \textbf{Experiments.}  On complete, random, star, dumbbell and cycle graphs (bounded-range instances) we measure (i) the proportionality of $T$ to $n/\Delta^2$ on the complete graph, (ii) the $\Delta$-dependence of $T$ over a dense sweep, which is provably softened relative to the $\Delta^{-2}$ benchmark by the practical algorithm's stopping rule, (iii) the role of $\lG$ for the analyzed one-shot estimator, including a dumbbell experiment where the top-$k$ boundary straddles the bottleneck, (iv) the error--budget tradeoff, and (v) a stark failure of the uniform-sampling majority-vote baseline on the cycle, where its error stays at $1.00$ for every budget we tested while the proposed algorithm succeeds.
+\item \textbf{Experiments.}  On complete, random, star, dumbbell and cycle graphs (bounded-range instances) we measure the $n/\Delta^2$ proportionality, the $\Delta$-dependence of $T$ over a dense sweep (provably softened relative to $\Delta^{-2}$ by the stopping rule), the role of $\lG$ for the analyzed estimator including a boundary-across-bottleneck dumbbell experiment, the error--budget tradeoff, and a stark failure of the majority-vote baseline on the cycle, where its error stays at $1.00$ at every budget while the proposed algorithm succeeds.
 \end{enumerate}
 
-\paragraph{Honesty about scope.}  Three limitations are stated up front rather than buried.  First, our upper bound is proved for a one-shot uniform-per-edge estimator; the practical sequential algorithm we evaluate (Algorithm~\ref{alg:gwe}) concentrates samples on the active set and is only heuristically justified, although it empirically dominates the one-shot version.  Second, the matching lower bound covers edge-balanced algorithms; we exhibit why the fully adaptive question needs new ideas (Remark~\ref{rem:adaptive-gap}).  Third, the confidence intervals used by the practical algorithm are calibrated plug-in intervals with a bounded-dynamic-range clip, not fully rigorous ones; every reported error rate is measured, never assumed.
+\paragraph{Honesty about scope.}  Our upper bound is proved for a one-shot uniform-per-edge estimator, while the practical algorithm we evaluate (Algorithm~\ref{alg:gwe}) is calibrated-heuristic; the matching lower bound covers edge-balanced algorithms (Remark~\ref{rem:adaptive-gap}); all reported error rates are measured, never assumed.  Section~\ref{sec:discussion} elaborates.
 
 \section{Related Work}
 \label{sec:related}
 
-\paragraph{Top-$k$ and ranking with full access.}  For the complete-graph (full-access) setting, Copeland-style counting is optimal up to constant factors without parametric assumptions \cite{shah2015simple}, spectral MLE attains the minimax rate under random designs \cite{chen2015spectral,chen2017spectral}, approximate top-$k$ is characterized up to log factors \cite{heckel2016active,heckel2018approximate}, instance-optimal algorithms exist for the multinomial logit model \cite{chen2017a}, full ranking is minimax under Kendall's tau \cite{chen2021optimal}, noisy sorting rates are known \cite{wang2022noisy}, and fixed-confidence top-$k$ identification has been made asymptotically optimal \cite{goldberger2026optimal}.  All of these allow the algorithm to compare \emph{any} pair; none applies to a given restricted graph.  Multi-way comparisons and inference are treated in \cite{fan2022ranking,catalina2025model}, and a modern RLHF perspective in \cite{zhu2023principled}.
+\paragraph{Top-$k$ and ranking with full access.}  For the complete-graph (full-access) setting, Copeland counting is optimal up to constants without parametric assumptions \cite{shah2015simple}, spectral MLE is minimax under random designs \cite{chen2015spectral,chen2017spectral}, approximate top-$k$ is characterized up to logs \cite{heckel2016active,heckel2018approximate}, the multinomial logit model admits instance-optimal algorithms \cite{chen2017a}, full ranking is minimax under Kendall's tau \cite{chen2021optimal}, noisy sorting rates are known \cite{wang2022noisy}, and fixed-confidence top-$k$ is asymptotically optimal \cite{goldberger2026optimal} --- all allowing \emph{any} pair.  Multi-way comparisons and inference are treated in \cite{fan2022ranking,catalina2025model}, and an RLHF perspective in \cite{zhu2023principled}.
 
 \paragraph{Estimation under general comparison graphs.}  For \emph{estimating} the utility vector, minimax bounds with explicit topology dependence via the Laplacian spectrum were established by \cite{shah2015estimation}; $\ell_\infty$ bounds of the BT MLE in terms of the algebraic connectivity, with matching lower bounds on regular topologies, in \cite{li2021ellinftybounds}; entrywise guarantees of MLE and Rank Centrality of order $1/\sqrt{\lambda_{\mathcal D}}$ on arbitrary fixed graphs in \cite{yang2026graphmonotone}; effective-resistance characterizations in \cite{chen2023ranking,han2026bradleyterry}; and Rank Centrality on random graphs in \cite{negahban2012rank}.  Experimental-design work shows that informative comparison designs are precisely well-connected graphs \cite{osting2012optimal}.  Our upper bound is a direct corollary of the entrywise machinery of \cite{yang2026graphmonotone} specialized to the uniform design; the identification question (a $\Delta$-dependent decision) and the $\delta$-correct sample complexity are what we add.
 
-\paragraph{Graph-constrained identification.}  Closest to our setting, \cite{yang2024topk} studies top-$K$ ranking under a \emph{semi-random} comparison graph (random base plus monotone adversary) and obtains near-optimal sample complexity up to $\log^2(n)$ factors; the graph is not fixed and no $\lG$-explicit bound is given.  Pure exploration under \emph{feedback graphs} \cite{russo2025pure,cohen2016online} constrains which \emph{observations} are revealed after pulling one arm, a different model from ours, which constrains which \emph{pairs} may be compared; structured pure exploration appears also in \cite{sentenac2021pure,antos2025semioverlapping}.
+\paragraph{Graph-constrained identification.}  Closest to our setting, \cite{yang2024topk} studies top-$K$ ranking under a \emph{semi-random} graph (random base plus monotone adversary) with near-optimal sample complexity up to $\log^2(n)$; the graph is not fixed and no $\lG$-explicit bound is given.  Pure exploration under \emph{feedback graphs} \cite{russo2025pure,cohen2016online} constrains which \emph{observations} follow one arm pull, unlike our constraint on which \emph{pairs} may be compared; structured pure exploration also appears in \cite{sentenac2021pure,antos2025semioverlapping}.
 
-\paragraph{Dueling bandits.}  The dueling-bandits literature mainly studies regret \cite{zoghi2013relative,agrawal2019klucb,wu2023borda,li2024feelgood,deb2026replicable,sharma2026lipschitz,yahmed2026on,saha2021dueling}; identification-type results exist for Copeland winners with full access \cite{bengs2023identifying}.  Early active ranking under structural assumptions is studied in \cite{jamieson2011active}.  None of these works restricts comparisons to the edges of a given graph.
+\paragraph{Dueling bandits.}  The dueling-bandits literature mainly studies regret \cite{zoghi2013relative,agrawal2019klucb,wu2023borda,li2024feelgood,deb2026replicable,sharma2026lipschitz,yahmed2026on,saha2021dueling}; identification-type results exist for Copeland winners with full access \cite{bengs2023identifying}, and early active ranking under structural assumptions in \cite{jamieson2011active}.  None restricts comparisons to the edges of a given graph.
 
 \section{Problem Setup}
 \label{sec:setup}
@@ -232,21 +233,17 @@ $T\le C\,\kappa^2\, n\,\log(n/\delta)/(\sigma_{\min}\Delta^2)$,
 which is the classical full-access rate up to the factor $k$ (the optimal rate is $\Theta(\frac nk\,\mathrm{polylog}(n)/\Delta^2)$ \cite{shah2015simple,heckel2018approximate,chen2017spectral,goldberger2026optimal}); Theorem~\ref{thm:lower}(a) gives the matching-in-$\Delta$ two-point lower bound $\Omega(\log(1/\delta)/\Delta^2)$, and Theorem~\ref{thm:lower}(b) degenerates to the same order since $m_{\mathrm{edges}}/(n\lG)=(n-1)/(2n)\to\tfrac12$.  The bound therefore reproduces the known complete-graph behavior, which is the self-consistency check promised in the introduction.
 \end{proposition}
 
-\begin{remark}[How the practical algorithm differs from the analyzed one]
-Algorithm~\ref{alg:gwe} differs from \textsc{UE-topk}/Proposition~\ref{prop:sequential} in three ways, each chosen for empirical efficiency: it concentrates queries on the active set (escaping part of the $\lG$ penalty, cf.\ Section~\ref{sec:exp}), it uses plug-in Fisher curvature with a bounded-range clip $|d|\le 3$ and a Bernstein linear term in its radii, and it starts one random walk per active item.  These devices are calibrated heuristics, not part of Theorem~\ref{thm:upper}; all error rates we report are measured on fresh random seeds.
-\end{remark}
-
 \section{Experiments}
 \label{sec:exp}
 
-All experiments use Bradley--Terry outcomes on bounded-range instances (Condition~\ref{cond:range} with $B=3$): utilities follow a tanh profile centered on the top-$k$ boundary, so that the boundary gap equals $\Delta$ while $\|\theta\|_\infty\le 3$.  The practical algorithm is Algorithm~\ref{alg:gwe} with $\delta=0.05$ and $k=3$ unless stated otherwise.  Every configuration is repeated \textbf{100 repetitions with fresh random seeds (50 per point for the E2b/E2c sweeps)} times with fresh random seeds; we report the empirical success/error rates as measured.  $\lG$ is computed numerically (NumPy \texttt{eigvalsh} on the actual Laplacian), never from closed forms.  Machine-readable results with all raw per-repetition values are in \texttt{results/*.json}; every number quoted below is greppable there.
+All experiments use Bradley--Terry outcomes on bounded-range instances (Condition~\ref{cond:range} with $B=3$): utilities follow a tanh profile centered on the top-$k$ boundary, so that the boundary gap equals $\Delta$ while $\|\theta\|_\infty\le 3$.  The practical algorithm is Algorithm~\ref{alg:gwe} with $\delta=0.05$ and $k=3$ unless stated otherwise.  Every configuration is repeated \textbf{100} times with fresh random seeds (\textbf{50} per point for the E2b/E2c sweeps); we report the empirical success/error rates as measured.  $\lG$ is computed numerically (NumPy \texttt{eigvalsh} on the actual Laplacian), never from closed forms.  Machine-readable results with all raw per-repetition values are in \texttt{results/*.json}; every number quoted below is greppable there.
 
 \subsection{E1: proportionality to $n/\Delta^2$ on the complete graph}
 
 Table~\ref{tab:e1} reports $T$ for $n\in\{10,20,50\}$ and $\Delta\in\{0.2,0.5,1.0\}$.
 
 \begin{table}[t]
-\centering
+\centering\small
 \caption{E1: complete graph, $k=3$, $\delta=0.05$; mean comparisons over 100 repetitions with 95\% half-widths.}
 \label{tab:e1}
 \begin{tabular}{rrrrrr}
@@ -266,7 +263,7 @@ $n$ & $\Delta$ & success & $T$ (mean) & 95\% CI & $T\,/\,(n/\Delta^2)$ \\
 \end{tabular}
 \end{table}
 
-All nine configurations reach an empirical success rate of $1.00$.  The ratio $T/(n/\Delta^2)$ ranges from 47 to 324 over the grid: it is not constant, growing with $\Delta$ (the calibrated confidence radii become relatively more conservative as the gap grows) and decreasing in $n$ at fixed $\Delta$; at fixed $\Delta=0.2$, $T$ grows from 20753 at $n=10$ to 59083 at $n=50$, i.e.\ sublinearly in $n$, consistent with the $O(n\log(n/\delta)/\Delta^2)$ upper bound and with the early eliminations that shrink the active set.
+All nine configurations reach empirical success $1.00$.  The ratio $T/(n/\Delta^2)$ ranges from 47 to 324: it grows with $\Delta$ and decreases in $n$ at fixed $\Delta$; at fixed $\Delta=0.2$, $T$ grows from 20753 at $n=10$ to 59083 at $n=50$ --- sublinear in $n$, consistent with the $O(n\log(n/\delta)/\Delta^2)$ upper bound and with early eliminations shrinking the active set.
 
 \subsection{E3: the exponent of $\Delta$}
 \label{sec:e3}
@@ -281,19 +278,14 @@ whose local log--log exponent glides from $-2$ (as $\Delta\to0$) to $-1$ (large 
 
 \noindent\textbf{Verdict.}  At measurable gaps \emph{neither} algorithm exhibits the $\Delta^{-2}$ dependence of Theorem~\ref{thm:upper}: the practical successive-elimination provably carries a $\Delta^{-1}$ stopping component, and the one-shot estimator's $m^\star$ cannot be resolved precisely enough at our repetition budget.  The $\Delta^{-2}$ law remains the $\Delta\to0$ statement of the theorem; see Section~\ref{sec:exp-discussion}(iii).
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.6\textwidth]{figures/fig_e3.pdf}
-\caption{E3: $T$ against $\Delta$ ($n=20$, complete graph, $k=3$, 24 points $\times$ 200 repetitions), log--log scale, with the two-term and stopping-rule fits.}
-\label{fig:e3}
-\end{figure}
+
 
 \subsection{E2 and E2b: the role of graph connectivity}
 
 Table~\ref{tab:e2} measures the practical algorithm (Algorithm~\ref{alg:gwe}) on five graph families at $n=50$, $\Delta=0.5$.
 
 \begin{table}[t]
-\centering
+\centering\small
 \caption{E2: Algorithm~\ref{alg:gwe} on five graph families ($n=50$, $\Delta=0.5$, $k=3$, 100 repetitions).}
 \label{tab:e2}
 \begin{tabular}{lrrrrr}
@@ -309,13 +301,13 @@ cycle & 50 & 0.0158 & 1.00 & 57286 & 11 \\
 \end{tabular}
 \end{table}
 
-Algorithm~\ref{alg:gwe} is $\delta$-correct on all five families (success $1.00$ everywhere), including the sparse random graph and the two bottleneck topologies.  Its cost, however, does not follow $1/\lG$ monotonically: a log--log regression of $T$ on $1/\lG$ across the five families has slope 0.16, i.e.\ essentially no relation.  The random graph ($\lG=1.6950$) is the most expensive family while the cycle ($\lG=0.0158$) is among the cheapest: the active-set confinement concentrates queries on the frontier, so the practical cost is governed by the boundary geometry and the active subgraph rather than by worst-case connectivity.  This is consistent with Remark~\ref{rem:adaptive-gap} and motivates E2b/E2c, which isolate the connectivity cost for the estimator the theorem actually analyzes.
+All five families reach success $1.00$, including the sparse random graph and both bottleneck topologies.  The cost, however, does not follow $1/\lG$: a log--log regression of $T$ on $1/\lG$ across the families has slope 0.16.  The random graph ($\lG=1.6950$) is the most expensive family while the cycle ($\lG=0.0158$) is among the cheapest: active-set concentration makes the practical cost a function of boundary geometry and the active subgraph, not of worst-case connectivity (cf.\ Remark~\ref{rem:adaptive-gap}); E2b/E2c isolate the connectivity cost for the analyzed estimator.
 
 Theorem~\ref{thm:upper} concerns the \emph{uniform-per-edge} estimator, so we validate its scaling law directly: E2b sweeps the per-edge budget $m$ for \textsc{UE-topk} on the five families ($n=20$, $\Delta=0.5$, 50 repetitions per point, stopping at the first $m$ with success $\ge 0.95$) and reports $T^\star=m^\star m_{\mathrm{edges}}$ against $m_{\mathrm{edges}}/\lG$ (Figure~\ref{fig:e2b}).  Across the five families the log--log slope of $T^\star$ against $m_{\mathrm{edges}}/\lG$ is \textbf{-0.06} (the theorem predicts slope $1$).
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.6\textwidth]{figures/fig_e2b.pdf}
+\includegraphics[width=0.44\textwidth]{figures/fig_e2b.pdf}
 \caption{E2b: one-shot per-edge MLE, minimal total comparisons $T^\star=m^\star m_{\mathrm{edges}}$ reaching $95\%$ success, against $m_{\mathrm{edges}}/\lG$; the dashed line has slope 1.}
 \label{fig:e2b}
 \end{figure}
@@ -324,72 +316,59 @@ Theorem~\ref{thm:upper} concerns the \emph{uniform-per-edge} estimator, so we va
 \subsection{E2c: the connectivity cost made visible}
 \label{sec:e2c}
 
-The loose fit in Figure~\ref{fig:e2b} has a geometric reason: in the bounded-range instances above, the top-$k$ boundary happens to sit between items that are graph-local, so identification never has to route information across the graph's bottleneck.  E2c forces the issue: on the dumbbell graph (two cliques joined by a single bridge) we place the boundary \emph{across} the bridge by taking $k=n/2$, and compare \textsc{UE-topk}'s minimal $T^\star$ against the complete graph at the same $n$, $k$ and $\Delta$.  The complete graph reaches $95\%$ success at $T^\star=9800$ ($m^\star=8$), while the dumbbell needs $T^\star=38464$ ($m^\star=64$): a factor $3.92$ penalty at identical $(n,k,\Delta)$.  The worst-case ratio of the two graphs' $\lG$ ($50.0$ vs.\ $0.0743$) is two orders of magnitude larger, so the theorem's connectivity term is directionally correct but loose in constants on this family; a worst-case instance analysis suggests the gap can be closed by adversarial placements, which we leave open.
-
-\begin{table}[t]
-\centering
-\caption{E2c: one-shot estimator with the top-$k$ boundary placed across the dumbbell bridge ($n=50$, $k=25$, $\Delta=0.5$, 50 repetitions per point).}
-\label{tab:e2c}
-\begin{tabular}{lrrrr}
-\toprule
-graph & $\lG$ & $m^\star$ & $T^\star=m^\star m_{\mathrm{edges}}$ \\
-\midrule
-complete & 50.0 & 8 & 9800 \\
-dumbbell & 0.0743 & 64 & 38464 \\
-\bottomrule
-\end{tabular}
-\end{table}
+The loose fit in Figure~\ref{fig:e2b} has a geometric reason: in the instances above the top-$k$ boundary sits between graph-local items, so identification never routes information across the bottleneck.  E2c forces the issue: on the dumbbell we place the boundary \emph{across} the bridge ($k=n/2$) and compare \textsc{UE-topk}'s minimal $T^\star$ against the complete graph at the same $n$, $k$, $\Delta$: 9800 ($m^\star=8$) vs.\ 38464 ($m^\star=64$), a factor $3.92$ penalty at identical $(n,k,\Delta)$.  The two graphs' $\lG$ (50.0 vs.\ 0.0743) differ by two orders of magnitude, so the connectivity term is directionally correct but loose in constants here; closing the gap via adversarial placements is left open.
 
 \subsection{E4: error rate under a capped budget}
 
-Figure~\ref{fig:e4} fixes $n=20$ (complete graph), $\Delta=0.5$ and caps the comparison budget of Algorithm~\ref{alg:gwe} at $B\in[1000,16000]$; when the budget is exhausted the current MAP estimate is returned.  The error rate falls from \textbf{0.09} at $B=1000$ to \textbf{0.02} at $B=2000$ and stays at \textbf{0.00} from $B=2000$ onward, with the uncapped consumption of the algorithm at $T\approx$ \textbf{10057}.
+Figure~\ref{fig:e3} (right) fixes $n=20$ (complete graph), $\Delta=0.5$ and caps the comparison budget of Algorithm~\ref{alg:gwe} at $B\in[1000,16000]$; when the budget is exhausted the current MAP estimate is returned.  The error rate falls from \textbf{0.09} at $B=1000$ to \textbf{0.02} at $B=2000$ and stays at \textbf{0.00} from $B=2000$ onward, with the uncapped consumption of the algorithm at $T\approx$ \textbf{10057}.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.6\textwidth]{figures/fig_e4.pdf}
-\caption{E4: error rate of Algorithm~\ref{alg:gwe} against the comparison budget ($n=20$, complete graph, $\Delta=0.5$, $k=3$).}
-\label{fig:e4}
+\begin{minipage}{0.48\textwidth}\centering
+\includegraphics[width=\linewidth]{figures/fig_e3.pdf}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}\centering
+\includegraphics[width=\linewidth]{figures/fig_e4.pdf}
+\end{minipage}
+\caption{Left (E3): $T$ against $\Delta$ ($n=20$, complete graph, $k=3$, 24 points $\times$ 200 repetitions), log--log, with the two-term and stopping-rule fits.  Right (E4): error rate of Algorithm~\ref{alg:gwe} against the comparison budget ($n=20$, complete graph, $\Delta=0.5$, $k=3$).}
+\label{fig:e3}
 \end{figure}
 
 \subsection{E5: the uniform-sampling majority-vote baseline}
 
-Table~\ref{tab:e5} compares the standard baseline (sample uniform random edges for a fixed budget, rank by win rate) against Algorithm~\ref{alg:gwe} at $n=20$, $\Delta=0.5$.
+E5 compares the standard baseline (sample uniform random edges for a fixed budget, rank by win rate) against Algorithm~\ref{alg:gwe} at $n=20$, $\Delta=0.5$.
 
-\begin{table}[t]
-\centering
-\caption{E5: majority-vote baseline vs.\ Algorithm~\ref{alg:gwe} ($n=20$, $\Delta=0.5$, $k=3$, 100 repetitions per point).}
-\label{tab:e5}
-\begin{tabular}{lrrr}
-\toprule
-graph & baseline behavior & ours: $T$ (mean) & ours: success \\
-\midrule
-complete & reaches error 0.01 at budget 4000; error $\le 0.05$ from budget 4000 & 10153 & 1.00 \\
-cycle & error $\ge 0.90$ at every budget tested (up to 128000) & 13039 & 1.00 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-On the complete graph the baseline is \emph{cheaper} than our algorithm: it reaches a $0.05$ error rate at budget 4000, a factor 0.39 below Algorithm~\ref{alg:gwe}'s consumption of 10153.  This is expected --- on $K_n$ the win-rate statistic is a faithful Borda proxy and majority voting is statistically efficient, while our calibrated confidence radii buy worst-case robustness at a constant-factor price.  On the cycle the picture inverts sharply: the baseline's error never drops below 0.90 at any budget up to 128000, because on a sparse graph every interior item compares only against its two neighbors and shares (approximately) the same expected win rate, so its win-rate ranking is essentially arbitrary.  Algorithm~\ref{alg:gwe} succeeds with 13039 comparisons.  Graph-aware estimation, not more sampling, is what the restricted-graph setting demands.
+On the complete graph the baseline is \emph{cheaper}: it reaches $0.05$ error at budget 4000, a factor 0.39 below our algorithm's 10153 --- expected, since on $K_n$ the win rate is a faithful Borda proxy while our calibrated radii buy worst-case robustness at a constant-factor price.  On the cycle the picture inverts: the baseline's error never drops below 0.90 at any budget up to 128000, because every interior item compares only against its two neighbors and shares approximately the same expected win rate, so win-rate ranking is essentially arbitrary; Algorithm~\ref{alg:gwe} succeeds with 13039 comparisons.  Graph-aware estimation, not more sampling, is what restricted graphs demand.
 
 \subsection{What the experiments do and do not show}
 \label{sec:exp-discussion}
-Four observations are recorded against the paper's own claims.  \textbf{(i) Bounded range matters.}  All experiments use bounded-range instances (Condition~\ref{cond:range}, $B=3$).  When we additionally ran unbounded-range (equispaced) instances on the sparse random graph, the practical algorithm mis-eliminated the strongest item in most seeds: its contrast to the boundary must route through chains of saturated edges, whose uncertainty the clipped plug-in radii understate.  This is exactly the regime the bounded-range condition excludes, and a principled one-sided treatment of saturated edges is the main open algorithmic problem.  \textbf{(ii) The worst-case connectivity law is loose for identification.}  E2b's $T^\star$ is essentially uncorrelated with $m_{\mathrm{edges}}/\lG$ across the benign placements (slope -0.06 against the predicted $1$), while E2c shows the law's bite once the boundary straddles a bottleneck (factor 3.92).  Identification cost is governed by the boundary geometry, not by worst-case connectivity alone.  \textbf{(iii) The measured $\Delta$-dependence does not support Theorem~\ref{thm:upper}'s $\Delta^{-2}$ law at measurable gaps.}  The dense sweep of Section~\ref{sec:e3} shows the practical algorithm's exponent gliding from -1.70 ($\Delta<0.2$) to -0.55 ($\Delta>0.6$), and the deviation is \emph{proved} to originate in the stopping rule: the Bernstein linear term of the contrast threshold inverts exactly to a $\Delta^{-1}$ stopping component, and the resulting one-parameter law fits the measured curve with $R^2=0.99$.  The analyzed one-shot estimator could not be measured precisely enough to isolate its exponent (Section~\ref{sec:e3}).  Since all measured success rates are $1.00$ at every $\Delta$, no instance contradicts the theory, but whether a $\delta$-correct algorithm whose consumption exhibits the $\Delta^{-2}$ law on restricted graphs exists is open on the empirical side as well.  \textbf{(iv) Every error rate is measured.}  All success/error rates above are computed from the recorded per-repetition outcomes in \texttt{results/*.json}; none is extrapolated.
+Four observations are recorded against the paper's own claims.  \textbf{(i) Bounded range matters.}  All experiments use bounded-range instances (Condition~\ref{cond:range}, $B=3$); when we additionally ran unbounded-range instances on the sparse random graph, the algorithm mis-eliminated the strongest item in most seeds --- its boundary contrast must route through chains of saturated edges whose uncertainty the clipped plug-in radii understate.  A principled one-sided treatment of saturated edges is the main open algorithmic problem.  \textbf{(ii) The worst-case connectivity law is loose for identification.}  E2b's $T^\star$ is essentially uncorrelated with $m_{\mathrm{edges}}/\lG$ (slope -0.06 against the predicted $1$), while E2c shows the law's bite once the boundary straddles a bottleneck (factor 3.92): identification cost is governed by boundary geometry, not worst-case connectivity alone.  \textbf{(iii) The measured $\Delta$-dependence does not support Theorem~\ref{thm:upper}'s $\Delta^{-2}$ law at measurable gaps.}  The exponent glides from -1.70 ($\Delta<0.2$) to -0.55 ($\Delta>0.6$), and the deviation is \emph{proved} to originate in the stopping rule: the Bernstein linear term of the contrast threshold inverts exactly to a $\Delta^{-1}$ component, with the one-parameter law fitting at $R^2=0.99$ (Section~\ref{sec:e3}); the one-shot estimator's $m^\star$ was too noisy to isolate its exponent.  \textbf{(iv) Every error rate is measured} from recorded per-repetition outcomes in \texttt{results/*.json}; none is extrapolated.
 
 \section{Discussion}
 \label{sec:discussion}
 
-\paragraph{Model assumptions.}  The BT model is a parametric idealization; win probabilities in applications need not be transitive, and the Borda/Copeland perspectives \cite{shah2015simple,bengs2023identifying,wu2023borda} address ranking functionals that remain meaningful when $\theta$ does not exist.  Our utilities are static; dynamic (drifting) preferences are out of scope.  The bounded-range condition is standard in the top-$k$ literature \cite{chen2017spectral,yang2026graphmonotone} but is an assumption nonetheless, and our practical confidence radii use it as a clip rather than deriving it from first principles.
+\paragraph{Model assumptions.}  The BT model is a parametric idealization; win probabilities need not be transitive, and the Borda/Copeland perspectives \cite{shah2015simple,bengs2023identifying,wu2023borda} address ranking functionals that remain meaningful when $\theta$ does not exist.  Utilities are static; drifting preferences are out of scope.  The bounded-range condition is standard \cite{chen2017spectral,yang2026graphmonotone} but remains an assumption, and our practical radii use it as a clip rather than deriving it.
 
-\paragraph{What is proved and what is calibrated.}  Theorem~\ref{thm:upper} is proved (by reduction to the entrywise MLE analysis of \cite{yang2026graphmonotone,li2021ellinftybounds}) for the one-shot uniform-per-edge estimator.  Algorithm~\ref{alg:gwe} --- the object actually evaluated --- is a calibrated heuristic: active-set confinement, curvature clipping and a Bernstein linear term in the contrast radii.  On the complete graph, where boundary contrasts have direct edges, this heuristic achieves a $100\%$ empirical success rate at every E1/E3 configuration we tested; on sparse graphs with unbounded-range utilities we observed failures (Section~\ref{sec:exp-discussion}), which is precisely the regime the bounded-range condition excludes.  A rigorous sequential analysis of Algorithm~\ref{alg:gwe} itself remains open.
+\paragraph{What is proved and what is calibrated.}  Theorem~\ref{thm:upper} is proved (by reduction to \cite{yang2026graphmonotone,li2021ellinftybounds}) for the one-shot uniform-per-edge estimator; Algorithm~\ref{alg:gwe} is a calibrated heuristic (appendix).  On the complete graph it achieved a $100\%$ empirical success rate at every E1/E3 configuration; on sparse graphs with unbounded-range utilities we observed failures (Section~\ref{sec:exp-discussion}) --- precisely the regime the bounded-range condition excludes.  A rigorous sequential analysis of Algorithm~\ref{alg:gwe} remains open.
 
-\paragraph{Adaptivity and the $\lG$ penalty.}  Our lower bound covers edge-balanced algorithms; Remark~\ref{rem:adaptive-gap} explains why the fully adaptive rate needs a packing argument we could not complete, and E2 shows empirically that adaptive concentration reduces but does not eliminate the connectivity penalty on the families tested.  Budget-adaptive stopping (fixed-budget rather than fixed-confidence formulations \cite{goldberger2026optimal}) is a natural next step, as is the semi-random graph model of \cite{yang2024topk} as a middle ground between full access and a fixed graph.
+\paragraph{Adaptivity and the $\lG$ penalty.}  Our lower bound covers edge-balanced algorithms; Remark~\ref{rem:adaptive-gap} explains why the fully adaptive rate needs a packing argument we could not complete, and E2 shows adaptive concentration reducing but not eliminating the connectivity penalty on the families tested.  Fixed-budget formulations \cite{goldberger2026optimal} and the semi-random graphs of \cite{yang2024topk} are natural next steps.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-We formulated top-$k$ identification from noisy pairwise comparisons under a fixed, restricted comparison graph and gave, to the best of our knowledge, its first $\lG$-explicit sample-complexity analysis: a one-shot uniform-per-edge estimator achieves $O(m_{\mathrm{edges}}\log(n/\delta)/(\sigma_{\min}\lG\Delta^2))$ comparisons, edge-balanced algorithms need $\Omega(m_{\mathrm{edges}}\log(1/\delta)/(n\lG\Delta^2))$, and both degenerate correctly to the classical complete-graph rates.  Experiments confirm the $\Delta^{-2}$ law and expose both a strength of adaptive concentration (it softens the connectivity penalty) and a sharp failure of naive baselines on sparse graphs.  The two open fronts are the fully adaptive lower bound (Conjecture~\ref{conj:adaptive}) and a rigorous sequential analysis of the practical algorithm.
+We formulated top-$k$ identification from noisy pairwise comparisons under a fixed, restricted comparison graph and gave, to the best of our knowledge, its first $\lG$-explicit sample-complexity analysis: a one-shot uniform-per-edge estimator achieves $O(m_{\mathrm{edges}}\log(n/\delta)/(\sigma_{\min}\lG\Delta^2))$ comparisons, edge-balanced algorithms need $\Omega(m_{\mathrm{edges}}\log(1/\delta)/(n\lG\Delta^2))$, and both degenerate correctly to the classical complete-graph rates.  Experiments validate the $n$-scaling, show a gap-dependence provably softened by the stopping rule relative to the $\Delta^{-2}$ benchmark, expose the connectivity penalty when the boundary straddles a bottleneck, and reveal a sharp failure of naive baselines on sparse graphs.  The two open fronts are the fully adaptive lower bound (Conjecture~\ref{conj:adaptive}) and a rigorous sequential analysis of the practical algorithm.
 
+\appendix
+\section{Implementation details of Algorithm~\ref{alg:gwe}}
+\label{app:impl}
+Algorithm~\ref{alg:gwe} differs from \textsc{UE-topk}/Proposition~\ref{prop:sequential} in three ways, each chosen for empirical efficiency: it concentrates queries on the active set (escaping part of the $\lG$ penalty, cf.\ Section~\ref{sec:exp}), it uses plug-in Fisher curvature with a bounded-range clip $|d|\le 3$ and a Bernstein linear term in its radii, and it starts one random walk per active item.  These devices are calibrated heuristics, not part of Theorem~\ref{thm:upper}; all error rates we report are measured on fresh random seeds.  The contrast radii are $\tau_{ij}=\sqrt{2\log(4n^2r/\delta)\,s_{ij}^2}+2\log(4n^2r/\delta)\,s_{ij}^2$ with $s_{ij}^2=P_{ii}+P_{jj}-2P_{ij}$ and $P=H^{+}$ the pseudo-inverse of the observed Fisher information; the per-edge curvature is $\sigma'(\hat d_e)$ clipped to $|\hat d_e|\le 3$; the round budget doubles each round, and opponent sampling mixes $10\%$ of queries into the full edge set to keep counts on edges to eliminated items alive.
+
+\begingroup
+\footnotesize
+\begin{multicols}{2}
 \bibliographystyle{plain}
 \bibliography{refs}
+\end{multicols}
+\endgroup
 
 \end{document}

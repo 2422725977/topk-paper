@@ -23,7 +23,7 @@ def fig_e3() -> None:
     T = np.array([c["T_mean"] for c in d["sweep"]])
     tt = d["two_term_fit"]
     tm = d["threshold_model_fit"]
-    fig, ax = plt.subplots(figsize=(5.0, 3.4))
+    fig, ax = plt.subplots(figsize=(4.5, 2.9))
     ax.loglog(deltas, T, "o", ms=4, label="measured $T$")
     xs = np.linspace(deltas.min(), deltas.max(), 200)
     r2a = tt["r_squared"]
@@ -43,7 +43,7 @@ def fig_e3() -> None:
 
 def fig_e2b() -> None:
     d = json.load(open(RESULTS / "e2b.json"))
-    fig, ax = plt.subplots(figsize=(5.0, 3.4))
+    fig, ax = plt.subplots(figsize=(4.5, 2.9))
     xs = np.array([f["m_edges_over_lambda"] for f in d["families"]])
     ys = np.array([f["T_star"] for f in d["families"]])
     names = [f["graph"] for f in d["families"]]
@@ -69,7 +69,7 @@ def fig_e4() -> None:
     d = json.load(open(RESULTS / "e4.json"))
     Bs = np.array([c["budget"] for c in d["sweep"]])
     errs = np.array([c["error_rate"] for c in d["sweep"]])
-    fig, ax = plt.subplots(figsize=(5.0, 3.4))
+    fig, ax = plt.subplots(figsize=(4.5, 2.9))
     ax.step(Bs, errs, where="post", lw=1.4)
     ax.set_xscale("log")
     ax.set_xlabel("budget $B$ (comparisons)")
