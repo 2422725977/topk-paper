@@ -107,15 +107,16 @@ C_B=\frac{1}{32\,\sigma(-2B)\,\sigma(2B)} .
 Write $p=\sigma(x)$, $q=\sigma(x+h)$ with $|x|,|x+h|\le 2B$.  Then $p,q\in[p_0,1-p_0]$ with $p_0=\sigma(-2B)$, so the densities $f_p,f_q$ of the Bernoulli laws satisfy $f_p(t)/f_q(t)\le (1-p_0)/p_0$ on both atoms.  Reverse Pinsker \cite[Sec.~3]{shah2015estimation} gives $\KL(p\|q)\le \mathrm{Var}_q(\log f_p-\log f_q)\cdot\frac{(1-p_0)}{p_0}\cdot \frac12$; since $|p-q|\le\sigma'_\mathrm{max}|h|=\frac14|h|$ and $\mathrm{Var}_q(\log\frac{f_p}{f_q})\le \frac{(p-q)^2}{q(1-q)}\le \frac{h^2}{16\,p_0(1-p_0)}$, we obtain $\KL\le h^2/(32\,p_0(1-p_0))=C_B h^2$.
 \end{proof}
 
-\section{Lower Bound}
-\label{sec:lower}
-
 \begin{definition}[Edge-balanced algorithm]
 \label{def:balanced}
 An algorithm is \emph{$\alpha$-balanced} on $G$ if for every instance $\theta$ and every edge $e\in E$,
 $\ \E_\theta[m_e]\ \le\ \frac{\alpha}{m}\,\E_\theta[T]$,
 where $m_e$ is the number of comparisons placed on edge $e$, $T$ the total number of comparisons, and $\alpha\ge 1$ a constant.  The uniform-per-edge estimator of Section~\ref{sec:upper} has $\alpha=1$; a random walk on a regular graph mixed to stationarity has $\alpha=O(1)$.
 \end{definition}
+
+
+\section{Lower Bound}
+\label{sec:lower}
 
 \begin{theorem}[Lower bound]
 \label{thm:lower}
