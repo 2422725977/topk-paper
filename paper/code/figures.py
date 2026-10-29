@@ -18,20 +18,20 @@ plt.rcParams.update({"font.size": 11, "figure.dpi": 150})
 
 
 def fig_e3() -> None:
-    d = json.load(open(RESULTS / "e3.json"))
+    d = json.load(open(RESULTS / "e3_fine.json"))
     deltas = np.array([c["delta"] for c in d["sweep"]])
     T = np.array([c["T_mean"] for c in d["sweep"]])
-    fit = d["fit"]
+    tt = d["two_term_fit"]
+    tm = d["threshold_model_fit"]
     fig, ax = plt.subplots(figsize=(5.0, 3.4))
-    ax.loglog(deltas, T, "o-", label="measured $T$", lw=1.2, ms=4)
-    xs = np.linspace(deltas.min(), deltas.max(), 50)
-    for key, style, label in [
-        ("fit_full_range", "--", "full-range fit"),
-        ("fit_small_gap_0.1_0.5", ":", "small-gap fit $[0.1,0.5]$"),
-    ]:
-        f = fit[key]
-        ax.loglog(xs, np.exp(f["log_log_intercept"] + f["log_log_slope"] * np.log(xs)),
-                  style, label=f"{label}: slope {f['log_log_slope']:.2f}")
+    ax.loglog(deltas, T, "o", ms=4, label="measured $T$")
+    xs = np.linspace(deltas.min(), deltas.max(), 200)
+    r2a = tt["r_squared"]
+    r2t = tm["r_squared"]
+    ax.loglog(xs, tt["a"] * xs ** -2 + tt["b"] * xs ** -1, "-", lw=1.2,
+              label=f"$a\\Delta^{{-2}}+b\\Delta^{{-1}}$  ($R^2={r2a:.3f}$)")
+    ax.loglog(xs, tm["A"] / (np.sqrt(1 + 4 * xs) - 1) ** 2, "--", lw=1.2,
+              label=f"stopping-rule law  ($R^2={r2t:.3f}$)")
     ax.set_xlabel(r"gap $\Delta$")
     ax.set_ylabel("comparisons $T$")
     ax.legend(fontsize=8)
