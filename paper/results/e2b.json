@@ -22,25 +22,41 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.7,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.5625,
+      0.809
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.7,
-     "T_total": 380
+     "T_total": 380,
+     "wilson95": [
+      0.5625,
+      0.809
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.9,
-     "T_total": 760
+     "T_total": 760,
+     "wilson95": [
+      0.7864,
+      0.9565
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.96,
-     "T_total": 1520
+     "T_total": 1520,
+     "wilson95": [
+      0.8654,
+      0.989
+     ]
     }
    ]
   },
@@ -57,49 +73,81 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.1,
-     "T_total": 39
+     "T_total": 39,
+     "wilson95": [
+      0.0435,
+      0.2136
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.2,
-     "T_total": 78
+     "T_total": 78,
+     "wilson95": [
+      0.1124,
+      0.3304
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.34,
-     "T_total": 156
+     "T_total": 156,
+     "wilson95": [
+      0.2244,
+      0.4785
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.46,
-     "T_total": 312
+     "T_total": 312,
+     "wilson95": [
+      0.3297,
+      0.596
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.64,
-     "T_total": 624
+     "T_total": 624,
+     "wilson95": [
+      0.5014,
+      0.7586
+     ]
     },
     {
      "m_per_edge": 32,
      "reps": 50,
      "success_rate": 0.84,
-     "T_total": 1248
+     "T_total": 1248,
+     "wilson95": [
+      0.7149,
+      0.9166
+     ]
     },
     {
      "m_per_edge": 64,
      "reps": 50,
      "success_rate": 0.9,
-     "T_total": 2496
+     "T_total": 2496,
+     "wilson95": [
+      0.7864,
+      0.9565
+     ]
     },
     {
      "m_per_edge": 128,
      "reps": 50,
      "success_rate": 1.0,
-     "T_total": 4992
+     "T_total": 4992,
+     "wilson95": [
+      0.9287,
+      1.0
+     ]
     }
    ]
   },
@@ -116,43 +164,71 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.04,
-     "T_total": 19
+     "T_total": 19,
+     "wilson95": [
+      0.011,
+      0.1346
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.28,
-     "T_total": 38
+     "T_total": 38,
+     "wilson95": [
+      0.1747,
+      0.4167
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.42,
-     "T_total": 76
+     "T_total": 76,
+     "wilson95": [
+      0.2938,
+      0.5577
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.48,
-     "T_total": 152
+     "T_total": 152,
+     "wilson95": [
+      0.348,
+      0.6149
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.72,
-     "T_total": 304
+     "T_total": 304,
+     "wilson95": [
+      0.5833,
+      0.8253
+     ]
     },
     {
      "m_per_edge": 32,
      "reps": 50,
      "success_rate": 0.74,
-     "T_total": 608
+     "T_total": 608,
+     "wilson95": [
+      0.6045,
+      0.8413
+     ]
     },
     {
      "m_per_edge": 64,
      "reps": 50,
      "success_rate": 0.96,
-     "T_total": 1216
+     "T_total": 1216,
+     "wilson95": [
+      0.8654,
+      0.989
+     ]
     }
    ]
   },
@@ -169,31 +245,51 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.46,
-     "T_total": 91
+     "T_total": 91,
+     "wilson95": [
+      0.3297,
+      0.596
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.62,
-     "T_total": 182
+     "T_total": 182,
+     "wilson95": [
+      0.4815,
+      0.7414
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.78,
-     "T_total": 364
+     "T_total": 364,
+     "wilson95": [
+      0.6476,
+      0.8725
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.92,
-     "T_total": 728
+     "T_total": 728,
+     "wilson95": [
+      0.8116,
+      0.9685
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 1.0,
-     "T_total": 1456
+     "T_total": 1456,
+     "wilson95": [
+      0.9287,
+      1.0
+     ]
     }
    ]
   },
@@ -210,37 +306,61 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.0,
-     "T_total": 20
+     "T_total": 20,
+     "wilson95": [
+      0.0,
+      0.0713
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.08,
-     "T_total": 40
+     "T_total": 40,
+     "wilson95": [
+      0.0315,
+      0.1884
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.34,
-     "T_total": 80
+     "T_total": 80,
+     "wilson95": [
+      0.2244,
+      0.4785
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.68,
-     "T_total": 160
+     "T_total": 160,
+     "wilson95": [
+      0.5419,
+      0.7924
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.76,
-     "T_total": 320
+     "T_total": 320,
+     "wilson95": [
+      0.6259,
+      0.857
+     ]
     },
     {
      "m_per_edge": 32,
      "reps": 50,
      "success_rate": 0.96,
-     "T_total": 640
+     "T_total": 640,
+     "wilson95": [
+      0.8654,
+      0.989
+     ]
     }
    ]
   }

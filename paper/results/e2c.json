@@ -19,25 +19,41 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.62,
-     "T_total": 1225
+     "T_total": 1225,
+     "wilson95": [
+      0.4815,
+      0.7414
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.74,
-     "T_total": 2450
+     "T_total": 2450,
+     "wilson95": [
+      0.6045,
+      0.8413
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.94,
-     "T_total": 4900
+     "T_total": 4900,
+     "wilson95": [
+      0.8378,
+      0.9794
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.98,
-     "T_total": 9800
+     "T_total": 9800,
+     "wilson95": [
+      0.895,
+      0.9965
+     ]
     }
    ]
   },
@@ -53,43 +69,71 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.48,
-     "T_total": 601
+     "T_total": 601,
+     "wilson95": [
+      0.348,
+      0.6149
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.26,
-     "T_total": 1202
+     "T_total": 1202,
+     "wilson95": [
+      0.1587,
+      0.3955
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.44,
-     "T_total": 2404
+     "T_total": 2404,
+     "wilson95": [
+      0.3116,
+      0.5769
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.62,
-     "T_total": 4808
+     "T_total": 4808,
+     "wilson95": [
+      0.4815,
+      0.7414
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.84,
-     "T_total": 9616
+     "T_total": 9616,
+     "wilson95": [
+      0.7149,
+      0.9166
+     ]
     },
     {
      "m_per_edge": 32,
      "reps": 50,
      "success_rate": 0.88,
-     "T_total": 19232
+     "T_total": 19232,
+     "wilson95": [
+      0.762,
+      0.9438
+     ]
     },
     {
      "m_per_edge": 64,
      "reps": 50,
      "success_rate": 0.98,
-     "T_total": 38464
+     "T_total": 38464,
+     "wilson95": [
+      0.895,
+      0.9965
+     ]
     }
    ]
   }

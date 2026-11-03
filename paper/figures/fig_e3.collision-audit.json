@@ -1,0 +1,124 @@
+{
+  "pdf": "../figures/fig_e3.pdf",
+  "auditable": true,
+  "verdict": "FIX BEFORE DELIVERY",
+  "page_count": 1,
+  "visible_text_box_count": 10,
+  "text_trace_count": 35,
+  "stroke_path_count": 217,
+  "filled_region_count": 144,
+  "image_region_count": 0,
+  "summary": {
+    "fail": 3,
+    "warn": 0,
+    "contained_fill_overlays": 3,
+    "contained_image_overlays": 0
+  },
+  "thresholds": {
+    "text_inset_pt": 0.6,
+    "min_overlap_ratio": 0.05,
+    "clipping_tolerance_pt": 0.5
+  },
+  "findings": [
+    {
+      "severity": "FAIL",
+      "kind": "text-stroke",
+      "page": 1,
+      "message": "Text is crossed by 10 stroked path(s)",
+      "text": "aΔ−2+ bΔ−1  (R2= 0.999)",
+      "text_bbox": [
+        166.52000427246094,
+        18.75625228881836,
+        268.3175354003906,
+        28.1402530670166
+      ],
+      "other_text": null,
+      "other_bbox": [
+        53.84257888793945,
+        11.879989624023438,
+        297.7200012207031,
+        140.11741638183594
+      ],
+      "object_count": 10,
+      "object_indexes": [
+        4,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        80,
+        82
+      ]
+    },
+    {
+      "severity": "FAIL",
+      "kind": "text-stroke",
+      "page": 1,
+      "message": "Text is crossed by 10 stroked path(s)",
+      "text": "stopping-rule law  (R2= 0.995)",
+      "text_bbox": [
+        166.52000427246094,
+        32.75625228881836,
+        289.79876708984375,
+        42.14025115966797
+      ],
+      "other_text": null,
+      "other_bbox": [
+        53.84257888793945,
+        11.879989624023438,
+        297.7200012207031,
+        140.11741638183594
+      ],
+      "object_count": 10,
+      "object_indexes": [
+        4,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        38
+      ]
+    },
+    {
+      "severity": "FAIL",
+      "kind": "text-stroke",
+      "page": 1,
+      "message": "Text is crossed by 11 stroked path(s)",
+      "text": "measured T (95% CI)",
+      "text_bbox": [
+        166.52000427246094,
+        46.75812530517578,
+        251.14781188964844,
+        54.75812530517578
+      ],
+      "other_text": null,
+      "other_bbox": [
+        53.84257888793945,
+        11.879989624023438,
+        297.7200012207031,
+        140.11741638183594
+      ],
+      "object_count": 11,
+      "object_indexes": [
+        4,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        70,
+        72,
+        74
+      ]
+    }
+  ]
+}

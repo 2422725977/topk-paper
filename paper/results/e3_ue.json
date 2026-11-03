@@ -18,55 +18,91 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.04,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.011,
+      0.1346
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.12,
-     "T_total": 380
+     "T_total": 380,
+     "wilson95": [
+      0.0562,
+      0.238
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.14,
-     "T_total": 760
+     "T_total": 760,
+     "wilson95": [
+      0.0695,
+      0.2619
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.2,
-     "T_total": 1520
+     "T_total": 1520,
+     "wilson95": [
+      0.1124,
+      0.3304
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.28,
-     "T_total": 3040
+     "T_total": 3040,
+     "wilson95": [
+      0.1747,
+      0.4167
+     ]
     },
     {
      "m_per_edge": 32,
      "reps": 50,
      "success_rate": 0.52,
-     "T_total": 6080
+     "T_total": 6080,
+     "wilson95": [
+      0.3851,
+      0.652
+     ]
     },
     {
      "m_per_edge": 64,
      "reps": 50,
      "success_rate": 0.6,
-     "T_total": 12160
+     "T_total": 12160,
+     "wilson95": [
+      0.4618,
+      0.7239
+     ]
     },
     {
      "m_per_edge": 128,
      "reps": 50,
      "success_rate": 0.82,
-     "T_total": 24320
+     "T_total": 24320,
+     "wilson95": [
+      0.692,
+      0.9023
+     ]
     },
     {
      "m_per_edge": 256,
      "reps": 50,
      "success_rate": 0.96,
-     "T_total": 48640
+     "T_total": 48640,
+     "wilson95": [
+      0.8654,
+      0.989
+     ]
     }
    ]
   },
@@ -79,55 +115,91 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.02,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.0035,
+      0.105
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.16,
-     "T_total": 380
+     "T_total": 380,
+     "wilson95": [
+      0.0834,
+      0.2851
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.32,
-     "T_total": 760
+     "T_total": 760,
+     "wilson95": [
+      0.2076,
+      0.4581
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.38,
-     "T_total": 1520
+     "T_total": 1520,
+     "wilson95": [
+      0.2586,
+      0.5185
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.54,
-     "T_total": 3040
+     "T_total": 3040,
+     "wilson95": [
+      0.404,
+      0.6703
+     ]
     },
     {
      "m_per_edge": 32,
      "reps": 50,
      "success_rate": 0.7,
-     "T_total": 6080
+     "T_total": 6080,
+     "wilson95": [
+      0.5625,
+      0.809
+     ]
     },
     {
      "m_per_edge": 64,
      "reps": 50,
      "success_rate": 0.84,
-     "T_total": 12160
+     "T_total": 12160,
+     "wilson95": [
+      0.7149,
+      0.9166
+     ]
     },
     {
      "m_per_edge": 128,
      "reps": 50,
      "success_rate": 0.94,
-     "T_total": 24320
+     "T_total": 24320,
+     "wilson95": [
+      0.8378,
+      0.9794
+     ]
     },
     {
      "m_per_edge": 256,
      "reps": 50,
      "success_rate": 1.0,
-     "T_total": 48640
+     "T_total": 48640,
+     "wilson95": [
+      0.9287,
+      1.0
+     ]
     }
    ]
   },
@@ -140,49 +212,81 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.28,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.1747,
+      0.4167
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.48,
-     "T_total": 380
+     "T_total": 380,
+     "wilson95": [
+      0.348,
+      0.6149
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.36,
-     "T_total": 760
+     "T_total": 760,
+     "wilson95": [
+      0.2414,
+      0.4986
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.58,
-     "T_total": 1520
+     "T_total": 1520,
+     "wilson95": [
+      0.4423,
+      0.7062
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.8,
-     "T_total": 3040
+     "T_total": 3040,
+     "wilson95": [
+      0.6696,
+      0.8876
+     ]
     },
     {
      "m_per_edge": 32,
      "reps": 50,
      "success_rate": 0.88,
-     "T_total": 6080
+     "T_total": 6080,
+     "wilson95": [
+      0.762,
+      0.9438
+     ]
     },
     {
      "m_per_edge": 64,
      "reps": 50,
      "success_rate": 0.86,
-     "T_total": 12160
+     "T_total": 12160,
+     "wilson95": [
+      0.7381,
+      0.9305
+     ]
     },
     {
      "m_per_edge": 128,
      "reps": 50,
      "success_rate": 0.96,
-     "T_total": 24320
+     "T_total": 24320,
+     "wilson95": [
+      0.8654,
+      0.989
+     ]
     }
    ]
   },
@@ -195,37 +299,61 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.2,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.1124,
+      0.3304
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.42,
-     "T_total": 380
+     "T_total": 380,
+     "wilson95": [
+      0.2938,
+      0.5577
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.58,
-     "T_total": 760
+     "T_total": 760,
+     "wilson95": [
+      0.4423,
+      0.7062
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.78,
-     "T_total": 1520
+     "T_total": 1520,
+     "wilson95": [
+      0.6476,
+      0.8725
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.86,
-     "T_total": 3040
+     "T_total": 3040,
+     "wilson95": [
+      0.7381,
+      0.9305
+     ]
     },
     {
      "m_per_edge": 32,
      "reps": 50,
      "success_rate": 0.96,
-     "T_total": 6080
+     "T_total": 6080,
+     "wilson95": [
+      0.8654,
+      0.989
+     ]
     }
    ]
   },
@@ -238,25 +366,41 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.62,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.4815,
+      0.7414
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.74,
-     "T_total": 380
+     "T_total": 380,
+     "wilson95": [
+      0.6045,
+      0.8413
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.82,
-     "T_total": 760
+     "T_total": 760,
+     "wilson95": [
+      0.692,
+      0.9023
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.98,
-     "T_total": 1520
+     "T_total": 1520,
+     "wilson95": [
+      0.895,
+      0.9965
+     ]
     }
    ]
   },
@@ -269,31 +413,51 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.78,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.6476,
+      0.8725
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.84,
-     "T_total": 380
+     "T_total": 380,
+     "wilson95": [
+      0.7149,
+      0.9166
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.94,
-     "T_total": 760
+     "T_total": 760,
+     "wilson95": [
+      0.8378,
+      0.9794
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.94,
-     "T_total": 1520
+     "T_total": 1520,
+     "wilson95": [
+      0.8378,
+      0.9794
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 1.0,
-     "T_total": 3040
+     "T_total": 3040,
+     "wilson95": [
+      0.9287,
+      1.0
+     ]
     }
    ]
   },
@@ -306,13 +470,21 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.88,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.762,
+      0.9438
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.96,
-     "T_total": 380
+     "T_total": 380,
+     "wilson95": [
+      0.8654,
+      0.989
+     ]
     }
    ]
   },
@@ -325,7 +497,11 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.98,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.895,
+      0.9965
+     ]
     }
    ]
   }

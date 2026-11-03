@@ -20,31 +20,51 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.44,
-     "T_total": 45
+     "T_total": 45,
+     "wilson95": [
+      0.3116,
+      0.5769
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.72,
-     "T_total": 90
+     "T_total": 90,
+     "wilson95": [
+      0.5833,
+      0.8253
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.84,
-     "T_total": 180
+     "T_total": 180,
+     "wilson95": [
+      0.7149,
+      0.9166
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.94,
-     "T_total": 360
+     "T_total": 360,
+     "wilson95": [
+      0.8378,
+      0.9794
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.98,
-     "T_total": 720
+     "T_total": 720,
+     "wilson95": [
+      0.895,
+      0.9965
+     ]
     }
    ]
   },
@@ -59,31 +79,51 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.72,
-     "T_total": 190
+     "T_total": 190,
+     "wilson95": [
+      0.5833,
+      0.8253
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.72,
-     "T_total": 380
+     "T_total": 380,
+     "wilson95": [
+      0.5833,
+      0.8253
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.9,
-     "T_total": 760
+     "T_total": 760,
+     "wilson95": [
+      0.7864,
+      0.9565
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.94,
-     "T_total": 1520
+     "T_total": 1520,
+     "wilson95": [
+      0.8378,
+      0.9794
+     ]
     },
     {
      "m_per_edge": 16,
      "reps": 50,
      "success_rate": 0.96,
-     "T_total": 3040
+     "T_total": 3040,
+     "wilson95": [
+      0.8654,
+      0.989
+     ]
     }
    ]
   },
@@ -98,25 +138,41 @@
      "m_per_edge": 1,
      "reps": 50,
      "success_rate": 0.68,
-     "T_total": 1225
+     "T_total": 1225,
+     "wilson95": [
+      0.5419,
+      0.7924
+     ]
     },
     {
      "m_per_edge": 2,
      "reps": 50,
      "success_rate": 0.78,
-     "T_total": 2450
+     "T_total": 2450,
+     "wilson95": [
+      0.6476,
+      0.8725
+     ]
     },
     {
      "m_per_edge": 4,
      "reps": 50,
      "success_rate": 0.88,
-     "T_total": 4900
+     "T_total": 4900,
+     "wilson95": [
+      0.762,
+      0.9438
+     ]
     },
     {
      "m_per_edge": 8,
      "reps": 50,
      "success_rate": 0.98,
-     "T_total": 9800
+     "T_total": 9800,
+     "wilson95": [
+      0.895,
+      0.9965
+     ]
     }
    ]
   }

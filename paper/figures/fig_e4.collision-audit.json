@@ -1,0 +1,49 @@
+{
+  "pdf": "../figures/fig_e4.pdf",
+  "auditable": true,
+  "verdict": "FIX BEFORE DELIVERY",
+  "page_count": 1,
+  "visible_text_box_count": 10,
+  "text_trace_count": 15,
+  "stroke_path_count": 69,
+  "filled_region_count": 48,
+  "image_region_count": 0,
+  "summary": {
+    "fail": 1,
+    "warn": 0,
+    "contained_fill_overlays": 0,
+    "contained_image_overlays": 0
+  },
+  "thresholds": {
+    "text_inset_pt": 0.6,
+    "min_overlap_ratio": 0.05,
+    "clipping_tolerance_pt": 0.5
+  },
+  "findings": [
+    {
+      "severity": "FAIL",
+      "kind": "text-stroke",
+      "page": 1,
+      "message": "Text is crossed by 2 stroked path(s)",
+      "text": "uncapped T",
+      "text_bbox": [
+        249.9912872314453,
+        69.41140747070312,
+        297.0198974609375,
+        77.41140747070312
+      ],
+      "other_text": null,
+      "other_bbox": [
+        51.63999938964844,
+        16.058700561523438,
+        292.63568115234375,
+        139.8348388671875
+      ],
+      "object_count": 2,
+      "object_indexes": [
+        19,
+        68
+      ]
+    }
+  ]
+}

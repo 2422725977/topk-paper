@@ -23,8 +23,11 @@ def fig_e3() -> None:
     T = np.array([c["T_mean"] for c in d["sweep"]])
     tt = d["two_term_fit"]
     tm = d["threshold_model_fit"]
-    fig, ax = plt.subplots(figsize=(4.3, 2.6))
-    ax.loglog(deltas, T, "o", ms=4, label="measured $T$")
+    hw = np.array([c["T_ci95_halfwidth"] for c in d["sweep"]])
+    fig, ax = plt.subplots(figsize=(4.8, 2.35))
+    ax.errorbar(deltas, T, yerr=hw, fmt="o", ms=4, lw=1.2, capsize=2.5,
+                elinewidth=0.8, label="measured $T$ (95% CI)")
+    ax.loglog(deltas, T, "o", ms=4)
     xs = np.linspace(deltas.min(), deltas.max(), 200)
     r2a = tt["r_squared"]
     r2t = tm["r_squared"]
@@ -34,7 +37,7 @@ def fig_e3() -> None:
               label=f"stopping-rule law  ($R^2={r2t:.3f}$)")
     ax.set_xlabel(r"gap $\Delta$")
     ax.set_ylabel("comparisons $T$")
-    ax.legend(fontsize=8)
+    ax.legend(fontsize=8, loc="lower left", bbox_to_anchor=(-0.02, 1.04), ncol=1, frameon=False, handlelength=1.6)
     ax.grid(alpha=0.3, which="both")
     fig.tight_layout()
     fig.savefig(FIGURES / "fig_e3.pdf")
@@ -43,7 +46,7 @@ def fig_e3() -> None:
 
 def fig_e2b() -> None:
     d = json.load(open(RESULTS / "e2b.json"))
-    fig, ax = plt.subplots(figsize=(4.3, 2.6))
+    fig, ax = plt.subplots(figsize=(4.5, 2.35))
     xs = np.array([f["m_edges_over_lambda"] for f in d["families"]])
     ys = np.array([f["T_star"] for f in d["families"]])
     names = [f["graph"] for f in d["families"]]
@@ -69,15 +72,18 @@ def fig_e4() -> None:
     d = json.load(open(RESULTS / "e4.json"))
     Bs = np.array([c["budget"] for c in d["sweep"]])
     errs = np.array([c["error_rate"] for c in d["sweep"]])
+    lo = errs - np.array([c["wilson95"][0] for c in d["sweep"]])
+    hi = np.array([c["wilson95"][1] for c in d["sweep"]]) - errs
     fig, ax = plt.subplots(figsize=(4.3, 2.6))
-    ax.step(Bs, errs, where="post", lw=1.4)
+    ax.errorbar(Bs, errs, yerr=[lo, hi], fmt="o-", ms=4, lw=1.2, capsize=2.5,
+                elinewidth=0.8, label="error rate (Wilson 95% CI)")
     ax.set_xscale("log")
     ax.set_xlabel("budget $B$ (comparisons)")
     ax.set_ylabel("error rate")
     ax.set_ylim(-0.02, 1.0)
+    ax.legend(fontsize=8, loc="lower left", bbox_to_anchor=(0.0, 1.02), ncol=2, frameon=False)
     ax.grid(alpha=0.3)
-    ax.axvline(10057, color="gray", ls="--", lw=1)
-    ax.annotate("uncapped $T$", (10057, 0.5), textcoords="offset points", xytext=(5, 0), fontsize=8)
+    ax.axvline(10057, color="gray", ls="--", lw=1, label="uncapped $T$")
     fig.tight_layout()
     fig.savefig(FIGURES / "fig_e4.pdf")
     plt.close(fig)
