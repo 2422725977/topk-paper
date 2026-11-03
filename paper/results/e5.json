@@ -18,8 +18,8 @@
     "T_std": 2119.8296497215015,
     "T_ci95_halfwidth": 415.48661134541425,
     "T_median": 11500.0,
-    "rounds_median": 0.0,
-    "wall_seconds": 4.7206878662109375e-05,
+    "rounds_median": 11.0,
+    "wall_seconds": 4.506111145019531e-05,
     "T_raw": [
      7660,
      11756,
@@ -285,7 +285,7 @@
     "T_std": 1819.129019696797,
     "T_ci95_halfwidth": 356.54928786057224,
     "T_median": 12780.0,
-    "rounds_median": 0.0,
+    "rounds_median": 10.0,
     "wall_seconds": 4.601478576660156e-05,
     "T_raw": [
      13292,

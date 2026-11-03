@@ -5212,5 +5212,12 @@
    "2.0000": -1.3333333333333333
   }
  },
- "wall_seconds_total": 287.44464111328125
+ "wall_seconds_total": 287.44464111328125,
+ "derived_at_delta_2": {
+  "measured_T_mean": 4180.32,
+  "two_term_prediction": 1872.6352936487333,
+  "threshold_prediction": 753.3796524718845,
+  "b_over_a": 5.447072834975573,
+  "note": "predictions computed from the stored fit coefficients at Delta=2.0"
+ }
 }

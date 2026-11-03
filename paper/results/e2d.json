@@ -1,0 +1,128 @@
+{
+ "experiment": "E2d",
+ "estimator": "uniform_edge_topk (analyzed in Theorem 5.1)",
+ "graph": "complete",
+ "delta": 0.5,
+ "k": 3,
+ "delta_conf": 0.05,
+ "ci_level_pct": 95,
+ "reps_per_point": 50,
+ "success_target": 0.95,
+ "families": [
+  {
+   "n": 10,
+   "m_edges": 45,
+   "lambda_G": 9.999999999999986,
+   "m_star": 16,
+   "T_star": 720,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.44,
+     "T_total": 45
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.72,
+     "T_total": 90
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.84,
+     "T_total": 180
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.94,
+     "T_total": 360
+    },
+    {
+     "m_per_edge": 16,
+     "reps": 50,
+     "success_rate": 0.98,
+     "T_total": 720
+    }
+   ]
+  },
+  {
+   "n": 20,
+   "m_edges": 190,
+   "lambda_G": 19.999999999999968,
+   "m_star": 16,
+   "T_star": 3040,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.72,
+     "T_total": 190
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.72,
+     "T_total": 380
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.9,
+     "T_total": 760
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.94,
+     "T_total": 1520
+    },
+    {
+     "m_per_edge": 16,
+     "reps": 50,
+     "success_rate": 0.96,
+     "T_total": 3040
+    }
+   ]
+  },
+  {
+   "n": 50,
+   "m_edges": 1225,
+   "lambda_G": 49.99999999999986,
+   "m_star": 8,
+   "T_star": 9800,
+   "sweep": [
+    {
+     "m_per_edge": 1,
+     "reps": 50,
+     "success_rate": 0.68,
+     "T_total": 1225
+    },
+    {
+     "m_per_edge": 2,
+     "reps": 50,
+     "success_rate": 0.78,
+     "T_total": 2450
+    },
+    {
+     "m_per_edge": 4,
+     "reps": 50,
+     "success_rate": 0.88,
+     "T_total": 4900
+    },
+    {
+     "m_per_edge": 8,
+     "reps": 50,
+     "success_rate": 0.98,
+     "T_total": 9800
+    }
+   ]
+  }
+ ],
+ "loglog_slope_Tstar_vs_n": 1.60420729498067,
+ "loglog_intercept": 3.0045688190299544,
+ "r_squared": 0.9806721734078304,
+ "theory_note": "T* = Theta(n log(n/delta)/Delta^2) on K_n, i.e. log-log slope 1 up to the log(n/delta) factor"
+}

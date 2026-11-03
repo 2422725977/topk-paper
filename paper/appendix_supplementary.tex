@@ -1,0 +1,41 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+\newcommand{\lG}{\lambda_G}
+\begin{document}
+\title{Supplementary Appendix for\\ ``Top-$k$ Identification from Noisy Pairwise Comparisons under Restricted Comparison Graphs''}
+\author{Xin Xia}
+\date{}
+\maketitle
+
+\section{Implementation details of Algorithm 1 and experimental parameters}
+\label{app:impl}
+Algorithm 1 (GraphWalk-SE, Section 5 of the main text) uses calibrated devices that are not part of Theorem 5.1: active-set query concentration, and contrast radii
+$\tau_{ij}=\sqrt{2\log(4n^2r/\delta)\,s_{ij}^2}+2\log(4n^2r/\delta)\,s_{ij}^2$ with $s_{ij}^2=P_{ii}+P_{jj}-2P_{ij}$, $P=H^{+}$ the pseudo-inverse of the observed Fisher information, per-edge curvature $\sigma'(\hat d_e)$ clipped to $|\hat d_e|\le 3$, a round budget that doubles, and $10\%$ full-graph mixing in opponent sampling.  A capped run (E4) finishes its current doubling round, so realized $T$ can exceed the cap by up to one round.  All error rates are measured on fresh random seeds.
+
+\paragraph{Experimental parameters and reproducibility.}
+Table~\ref{tab:params} lists the parameters of every experiment.  Instances are drawn once per configuration (not per repetition), as $\theta_i=3\tanh\big((k-\tfrac12-i)\,\Delta/3\big)$; repetitions differ only through algorithmic randomness, seeded deterministically from (experiment, configuration, repetition index), so every run is reproducible from the code in the accompanying repository (which also archives all \texttt{results/*.json} files, Python and NumPy versions).  Subsections of the main text are ordered by narrative rather than by experiment number.
+\begin{table}[t]\centering\small
+\caption{Parameters of all experiments.  ``Alg.'' is A for Algorithm 1 (GraphWalk-SE) and U for UE-topk.}
+\label{tab:params}
+\begin{tabular}{llllrl}
+\toprule
+exp & graph(s) & $n$ & $k$ & $\Delta$ grid (points) & reps, Alg \\\midrule
+E1 & complete & 10, 20, 50 & 3 & 0.2, 0.5, 1.0 (3) & 100, A \\
+E2 & complete, random ($p{=}0.15$), star, dumbbell, cycle & 50 & 3 & 0.5 (1) & 100, A \\
+E2b & complete, random ($p{=}0.2$), star, dumbbell, cycle & 20 & 3 & 0.5 (1) & 50, U \\
+E2c & complete, dumbbell & 50 & 25 & 0.5 (1) & 50, U \\
+E2d & complete & 10, 20, 50 & 3 & 0.5 (1) & 50, U \\
+E3 & complete & 20 & 3 & 0.1 to 1.5 (15) & 100, A \\
+E3-fine & complete & 20 & 3 & 0.05 to 2.0 (24, log-uniform) & 200, A \\
+E3-UE & complete & 20 & 3 & 0.05 to 2.0 (8, log-uniform) & 50, U \\
+E4 & complete & 20 & 3 & 0.5 (1), caps 1000 to 16000 & 100, A \\
+E5 & complete, cycle & 20 & 3 & 0.5 (1), budgets 500 to 128000 & 100, both \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{document}

@@ -103,14 +103,15 @@ def e4(reps: int = REPS, n: int = 20, delta: float = 0.5) -> dict:
     budgets = [1000, 2000, 3000, 4000, 5000, 6000, 8000, 10000, 12000, 16000]
     sweep = []
     for B in budgets:
-        T_raw, err_raw = [], []
+        T_raw, err_raw, rounds_raw = [], [], []
         t0 = time.time()
         for rep in range(reps):
             rng = np.random.default_rng(300_000 + rep)
             S, T, info = _run_rep(graph_walk_elimination, theta, G, K, DELTA_CONF, rng, max_T=B)
             T_raw.append(int(T))
+            rounds_raw.append(int(info["rounds"]))
             err_raw.append(bool(set(S) != truth))
-        cell = _stats(T_raw, [not e for e in err_raw], [0] * reps, t0,
+        cell = _stats(T_raw, [not e for e in err_raw], rounds_raw, t0,
                       {"budget": B, "error_rate": float(np.mean(err_raw))})
         sweep.append(cell)
         print(f"[E4] B={B:6d}: reps={cell['reps']} error_rate={cell['error_rate']:.2f} "
@@ -131,13 +132,14 @@ def e5(reps: int = REPS, n: int = 20, delta: float = 0.5) -> dict:
     truth = set(range(K))
     for gname, G in (("complete", complete_graph(n)), ("cycle", cycle_graph(n))):
         # our algorithm at its delta-correct operating point
-        T_raw, success_raw = [], []
+        T_raw, success_raw, rounds_raw = [], [], []
         for rep in range(reps):
             rng = np.random.default_rng(400_000 + rep)
             S, T, info = graph_walk_elimination(theta, G, K, DELTA_CONF, rng=rng)
             T_raw.append(int(T))
+            rounds_raw.append(int(info["rounds"]))
             success_raw.append(bool(set(S) == truth))
-        ours = _stats(T_raw, success_raw, [0] * reps, time.time(),
+        ours = _stats(T_raw, success_raw, rounds_raw, time.time(),
                       {"graph": gname})
         # baseline budget sweep
         budgets = [500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]

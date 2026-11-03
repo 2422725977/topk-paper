@@ -94,5 +94,6 @@
    ]
   }
  ],
- "T_star_ratio_dumbbell_over_complete": 3.9248979591836735
+ "T_star_ratio_dumbbell_over_complete": 3.9248979591836735,
+ "predicted_T_star_ratio_from_medges_over_lambda": 330.25221777226375
 }
